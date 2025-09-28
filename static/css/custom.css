@@ -1,0 +1,198 @@
+/* =========================
+   Ajustes de Navbar y Logo
+   ========================= */
+   .header-area .logo img,
+   .main-nav .logo img,
+   .logo-img {
+       max-height: 80px !important; /* altura controlada */
+       width: auto !important;      /* mantiene proporción */
+       object-fit: contain;
+       display: inline-block;
+       margin-top: 5px; /* un poco de espacio arriba */
+   }
+   
+   /* =========================
+      Navbar - Espaciado
+      ========================= */
+   .main-nav ul.nav li a {
+       padding: 15px 20px;  /* espaciado uniforme */
+       font-size: 15px;
+       font-weight: 500;
+   }
+   
+   /* =========================
+      Banner principal
+      ========================= */
+   .main-banner .thumb img {
+       width: 100%;
+       height: auto;
+       object-fit: cover;
+       border-radius: 8px;
+   }
+   
+   /* =========================
+      Hover en categorías
+      ========================= */
+   .thumb .hover-content {
+       position: absolute;
+       bottom: 15px;
+       left: 50%;
+       transform: translateX(-50%);
+       opacity: 0;
+       transition: all 0.3s ease-in-out;
+   }
+   .thumb:hover .hover-content {
+       opacity: 1;
+   }
+   
+   /* =========================
+      Carrusel de productos
+      ========================= */
+   .owl-men-item .item {
+       margin: 10px;
+   }
+   .owl-men-item .thumb img {
+       border-radius: 6px;
+       transition: transform 0.3s;
+   }
+   .owl-men-item .thumb img:hover {
+       transform: scale(1.05);
+   }
+   
+   /* =========================
+      Footer
+      ========================= */
+   footer {
+       background: #222;
+       color: #ddd;
+       padding: 20px 0;
+       text-align: center;
+   }
+   footer p {
+       margin: 0;
+       font-size: 14px;
+   }
+   /* Corrige la vista de categorías (baners) */
+.thumb {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.thumb img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+.thumb .inner-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+    width: 100%;
+    padding: 10px;
+}
+
+.thumb .inner-content h4 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.thumb .inner-content span {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.thumb .main-border-button a {
+    background-color: #2a2a2a;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.thumb .main-border-button a:hover {
+    background-color: #ff3eff; /* color destacado */
+}
+
+/* Bienvenida */
+.main-banner {
+    padding: 60px 0;
+  }
+  
+  .header-text {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .header-text h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  
+  .header-text p {
+    margin-bottom: 20px;
+  }
+  
+  /* Categorías */
+  .section .thumb {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+  
+  .section .thumb img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+  }
+  
+  .section .thumb .inner-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+  }
+  
+  .section .thumb h4 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .section .thumb span {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+  
+  .section .thumb .main-border-button a {
+    background: #2a2a2a;
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 25px;
+    text-decoration: none;
+  }
+  
+  .section .thumb .main-border-button a:hover {
+    background: #ff3eff;
+  }
+  
+  /* Espaciado */
+  .section {
+    margin-top: 60px;
+    margin-bottom: 60px;
+  }
+  
+
+   

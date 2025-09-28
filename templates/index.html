@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- ***** Main Banner Area Start ***** -->
+<div class="main-banner" id="top">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Banner Izquierda -->
+            <div class="col-lg-6">
+                <div class="left-content">
+                    <div class="thumb">
+                        <div class="inner-content">
+                            <h4>We are Off The Rack</h4>
+                            <span>Tu tienda de moda en línea</span>
+                            <div class="main-border-button">
+                                <a href="{% url 'productos:lista' %}">Explorar Ahora</a>
+                            </div>
+                        </div>
+                        <img src="{% static 'images/left-banner-image.jpg' %}" alt="Moda OffTheRack">
+                    </div>
+                </div>
+            </div>
+            <!-- Banner Derecha -->
+            <div class="col-lg-6">
+                <div class="right-content">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="right-first-image">
+                                <div class="thumb">
+                                    <div class="inner-content">
+                                        <h4>Mujeres</h4>
+                                        <span>Última colección</span>
+                                    </div>
+                                    <div class="hover-content">
+                                        <div class="inner">
+                                            <h4>Mujeres</h4>
+                                            <p>Explora lo más nuevo en moda femenina.</p>
+                                            <div class="main-border-button">
+                                                <a href="{% url 'productos:categoria' 'Mujeres' %}">Explorar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <img src="{% static 'images/baner-right-image-01.jpg' %}" alt="Mujeres">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="right-first-image">
+                                <div class="thumb">
+                                    <div class="inner-content">
+                                        <h4>Hombres</h4>
+                                        <span>Estilo único</span>
+                                    </div>
+                                    <div class="hover-content">
+                                        <div class="inner">
+                                            <h4>Hombres</h4>
+                                            <p>Moda masculina moderna y versátil.</p>
+                                            <div class="main-border-button">
+                                                <a href="{% url 'productos:categoria' 'Hombres' %}">Explorar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <img src="{% static 'images/baner-right-image-02.jpg' %}" alt="Hombres">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="right-first-image">
+                                <div class="thumb">
+                                    <div class="inner-content">
+                                        <h4>Niños</h4>
+                                        <span>Moda infantil</span>
+                                    </div>
+                                    <div class="hover-content">
+                                        <div class="inner">
+                                            <h4>Niños</h4>
+                                            <p>Comodidad y estilo para los más pequeños.</p>
+                                            <div class="main-border-button">
+                                                <a href="{% url 'productos:categoria' 'Niños' %}">Explorar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <img src="{% static 'images/baner-right-image-03.jpg' %}" alt="Niños">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="right-first-image">
+                                <div class="thumb">
+                                    <div class="inner-content">
+                                        <h4>Accesorios</h4>
+                                        <span>Complementa tu look</span>
+                                    </div>
+                                    <div class="hover-content">
+                                        <div class="inner">
+                                            <h4>Accesorios</h4>
+                                            <p>Los detalles que hacen la diferencia.</p>
+                                            <div class="main-border-button">
+                                                <a href="{% url 'productos:categoria' 'Accesorios' %}">Explorar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <img src="{% static 'images/baner-right-image-04.jpg' %}" alt="Accesorios">
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- row -->
+                </div> <!-- right-content -->
+            </div> <!-- col-lg-6 -->
+        </div> <!-- row -->
+    </div> <!-- container-fluid -->
+</div>
+<!-- ***** Main Banner Area End ***** -->
+
+{% endblock %}

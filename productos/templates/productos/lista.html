@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Todos los Productos</h2>
+  <div class="row">
+    {% for producto in productos %}
+      <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <div class="card h-100">
+          {% if producto.imagen %}
+            <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+          {% else %}
+            <img src="{% static 'images/default-product.jpg' %}" class="card-img-top" alt="{{ producto.nombre }}">
+          {% endif %}
+          <div class="card-body text-center">
+            <h5 class="card-title">{{ producto.nombre }}</h5>
+            <p class="card-text">${{ producto.precio }}</p>
+            <a href="{% url 'productos:detalle' producto.id %}" class="btn btn-dark">Ver Detalles</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-center">No hay productos disponibles.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

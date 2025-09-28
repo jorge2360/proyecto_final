@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Productos Destacados</h2>
+
+  <h3>Hombres</h3>
+  <div class="owl-men-item owl-carousel">
+    {% for producto in productos_hombres %}
+    <div class="item">
+      <div class="thumb">
+        {% if producto.imagen %}
+          <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+        {% else %}
+          <img src="{% static 'images/default-product.jpg' %}" alt="{{ producto.nombre }}">
+        {% endif %}
+        <div class="down-content text-center">
+          <h4>{{ producto.nombre }}</h4>
+          <span>${{ producto.precio }}</span>
+          <div class="main-border-button">
+            <a href="{% url 'productos:detalle' producto.id %}">Ver Detalles</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p>No hay productos disponibles en esta categoría.</p>
+    {% endfor %}
+  </div>
+
+  <!-- Repite bloques para mujeres y niños -->
+</div>
+{% endblock %}
