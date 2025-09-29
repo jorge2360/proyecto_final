@@ -8,21 +8,50 @@
        width: auto !important;      /* mantiene proporción */
        object-fit: contain;
        display: inline-block;
-       margin-top: 5px; /* un poco de espacio arriba */
+       margin-top: 5px;
    }
    
-   /* =========================
-      Navbar - Espaciado
-      ========================= */
    .main-nav ul.nav li a {
-       padding: 15px 20px;  /* espaciado uniforme */
+       padding: 15px 20px;
        font-size: 15px;
        font-weight: 500;
+   }
+   
+   /* Navbar fijo arriba */
+   body {
+       padding-top: 100px; /* asegura espacio debajo del navbar */
+   }
+   
+   header.header-area {
+       z-index: 1000;
+       position: fixed;
+       top: 0;
+       left: 0;
+       width: 100%;
    }
    
    /* =========================
       Banner principal
       ========================= */
+   .main-banner {
+       padding: 60px 0;
+   }
+
+   /* Banner izquierdo más grande */
+.main-banner .left-content .thumb {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 600px; /* 👈 Altura del banner izquierdo (puedes ajustar aquí: 400px, 500px, 600px, etc.) */
+}
+
+.main-banner .left-content .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+   
    .main-banner .thumb img {
        width: 100%;
        height: auto;
@@ -30,19 +59,114 @@
        border-radius: 8px;
    }
    
+   .header-text {
+       max-width: 500px;
+       margin: 0 auto;
+       text-align: left;
+   }
+   
+   .header-text h2 {
+       font-size: 36px;
+       font-weight: 700;
+       margin-bottom: 20px;
+   }
+   
+   .header-text p {
+       margin-bottom: 20px;
+   }
+   
    /* =========================
-      Hover en categorías
+      Categorías (banners)
       ========================= */
+   .thumb {
+       position: relative;
+       overflow: hidden;
+       border-radius: 8px;
+   }
+   
+   .thumb img {
+       width: 100%;
+       height: 300px;       /* altura fija para uniformidad */
+       object-fit: cover;   /* asegura proporción sin deformar */
+       display: block;
+       border-radius: 8px;
+   }
+   
+   /* Texto centrado con Flexbox */
+   .thumb .inner-content {
+       position: absolute;
+       top: 50%;
+       left: 50%;
+       transform: translate(-50%, -50%);
+       display: flex;
+       flex-direction: column;   /* apila h4 y span */
+       justify-content: center;  /* centra vertical */
+       align-items: center;      /* centra horizontal */
+       text-align: center;
+       color: #fff;
+       z-index: 2;
+       width: 100%; /* ocupa todo el ancho */
+       padding: 0 10px;
+   }
+   
+   .thumb .inner-content h4 {
+       font-size: 22px;
+       font-weight: 700;
+       margin-bottom: 5px;
+       display: block;
+       text-align: center;
+   }
+   
+   .thumb .inner-content span {
+       font-size: 14px;
+       margin-top: 5px;
+       margin-bottom: 10px;
+       color: #f1f1f1;
+       text-align: center;
+       display: block;
+       float: none !important; /* evita desplazamiento a la derecha */
+   }
+   
+   /* Hover oscuro */
    .thumb .hover-content {
        position: absolute;
-       bottom: 15px;
-       left: 50%;
-       transform: translateX(-50%);
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100%;
+       background: rgba(0,0,0,0.7);
+       color: #fff;
        opacity: 0;
        transition: all 0.3s ease-in-out;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       text-align: center;
+       padding: 15px;
    }
+   
    .thumb:hover .hover-content {
        opacity: 1;
+   }
+   
+   /* Botón dentro de las categorías */
+   .thumb .main-border-button a {
+       background-color: #2a2a2a;
+       color: #fff;
+       padding: 10px 20px;
+       border-radius: 25px;
+       text-decoration: none;
+       transition: all 0.3s ease;
+   }
+   
+   .thumb .main-border-button a:hover {
+       background-color: #43409c;
+   }
+   
+   /* Espaciado entre secciones */
+   .section {
+       margin-top: 60px;
+       margin-bottom: 60px;
    }
    
    /* =========================
@@ -51,11 +175,24 @@
    .owl-men-item .item {
        margin: 10px;
    }
+   
    .owl-men-item .thumb img {
        border-radius: 6px;
        transition: transform 0.3s;
    }
+   
    .owl-men-item .thumb img:hover {
+       transform: scale(1.05);
+   }
+   
+   /* =========================
+      Animaciones en categorías
+      ========================= */
+   .item img {
+       transition: transform 0.3s ease;
+   }
+   
+   .item img:hover {
        transform: scale(1.05);
    }
    
@@ -68,148 +205,83 @@
        padding: 20px 0;
        text-align: center;
    }
+   
    footer p {
        margin: 0;
        font-size: 14px;
    }
-   /* Corrige la vista de categorías (baners) */
-.thumb {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
+   
+/* === FIX: Centrar textos en tarjetas de categorías === */
+/* Asegura el contexto relativo */
+.right-content .right-first-image .thumb,
+.left-content .thumb {
+  position: relative;
 }
 
-.thumb img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 8px;
+/* Centrado absoluto con prioridad sobre el CSS del template */
+.right-content .right-first-image .thumb .inner-content {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translate(-50%, -50%) !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+
+  width: 100% !important;
+  max-width: calc(100% - 30px) !important; /* evita pegarse a los bordes */
+  padding: 0 10px !important;
+  text-align: center !important;
+  z-index: 2 !important;
 }
 
-.thumb .inner-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: #fff;
-    width: 100%;
-    padding: 10px;
+/* Tipografías y alineación */
+.right-content .right-first-image .thumb .inner-content h4,
+.right-content .right-first-image .thumb .inner-content span {
+  display: block !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+  text-align: center !important;
+  float: none !important; /* anula floats heredados */
 }
 
-.thumb .inner-content h4 {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 5px;
+/* Tamaños razonables (el template tiende a agrandarlos) */
+.right-content .right-first-image .thumb .inner-content h4 {
+  font-size: 28px !important;
+  line-height: 1.2 !important;
+  letter-spacing: .2px;
+}
+.right-content .right-first-image .thumb .inner-content span {
+  font-size: 16px !important;
+  margin-top: 6px !important;
+  color: #f1f1f1 !important;
 }
 
-.thumb .inner-content span {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 15px;
+/* Uniforma el alto de las imágenes de categoría */
+.right-content .right-first-image .thumb img {
+  width: 100% !important;
+  height: 300px !important;
+  object-fit: cover !important;
+  border-radius: 12px;
 }
 
-.thumb .main-border-button a {
-    background-color: #2a2a2a;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 25px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.thumb .main-border-button a:hover {
-    background-color: #43409c; /* color destacado */
-}
-
-/* Bienvenida */
-.main-banner {
-    padding: 60px 0;
+/* Ocultar el texto inicial cuando se activa el hover */
+.right-content .right-first-image .thumb:hover .inner-content {
+    opacity: 0 !important;
+    transition: opacity 0.3s ease-in-out;
   }
   
-  .header-text {
-    max-width: 500px;
-    margin: 0 auto;
+  /* Mostrar solo el hover-content al pasar el cursor */
+  .right-content .right-first-image .thumb .hover-content {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
   }
   
-  .header-text h2 {
-    font-size: 36px;
-    font-weight: 700;
-    margin-bottom: 20px;
+  .right-content .right-first-image .thumb:hover .hover-content {
+    opacity: 1;
   }
   
-  .header-text p {
-    margin-bottom: 20px;
-  }
-  
-  /* Categorías */
-  .section .thumb {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-  }
-  
-  .section .thumb img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    display: block;
-  }
-  
-  .section .thumb .inner-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: #fff;
-  }
-  
-  .section .thumb h4 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .section .thumb span {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 15px;
-  }
-  
-  .section .thumb .main-border-button a {
-    background: #2a2a2a;
-    color: #fff;
-    padding: 8px 18px;
-    border-radius: 25px;
-    text-decoration: none;
-  }
-  
-  .section .thumb .main-border-button a:hover {
-    background: #43409c;
-  }
-  
-  /* Espaciado */
-  .section {
-    margin-top: 60px;
-    margin-bottom: 60px;
-  }
-  
-  .item img {
-    transition: transform 0.3s ease;
-  }
-  
-  .item img:hover {
-    transform: scale(1.05);
-  }
-  
-  body {
-    padding-top: 100px; /* asegura espacio debajo del navbar */
-  }
-  
-  header.header-area {
-    z-index: 1000; /* navbar siempre por encima */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-  }
