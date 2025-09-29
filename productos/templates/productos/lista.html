@@ -2,27 +2,43 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-5">
-  <h2 class="text-center mb-4">Todos los Productos</h2>
-  <div class="row">
-    {% for producto in productos %}
-      <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-        <div class="card h-100">
-          {% if producto.imagen %}
-            <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
-          {% else %}
-            <img src="{% static 'images/default-product.jpg' %}" class="card-img-top" alt="{{ producto.nombre }}">
-          {% endif %}
-          <div class="card-body text-center">
-            <h5 class="card-title">{{ producto.nombre }}</h5>
-            <p class="card-text">${{ producto.precio }}</p>
-            <a href="{% url 'productos:detalle' producto.id %}" class="btn btn-dark">Ver Detalles</a>
+
+<section class="section" id="products">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="section-heading text-center">
+          <h2>Todos los Productos Deportivos</h2>
+          <span>Haz clic en la imagen para ver el detalle</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      {% for producto in productos %}
+      <div class="col-lg-3 col-md-4 col-sm-6 mb-5">
+        <div class="item text-center">
+          <div class="thumb">
+            <a href="{% url 'productos:detalle' producto.pk %}">
+              {% if producto.imagen %}
+                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="img-fluid rounded shadow-sm">
+              {% else %}
+                <img src="{% static 'images/no-image.png' %}" alt="Sin imagen" class="img-fluid rounded shadow-sm">
+              {% endif %}
+            </a>
+          </div>
+          <div class="down-content mt-3">
+            <h5>{{ producto.nombre }}</h5>
+            <span class="text-success fw-bold">Q {{ producto.precio }}</span>
+            <p class="text-muted">{{ producto.categoria.nombre }}</p>
           </div>
         </div>
       </div>
-    {% empty %}
+      {% empty %}
       <p class="text-center">No hay productos disponibles.</p>
-    {% endfor %}
+      {% endfor %}
+    </div>
   </div>
-</div>
+</section>
+
 {% endblock %}

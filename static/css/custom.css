@@ -119,7 +119,7 @@
 }
 
 .thumb .main-border-button a:hover {
-    background-color: #ff3eff; /* color destacado */
+    background-color: #43409c; /* color destacado */
 }
 
 /* Bienvenida */
@@ -185,7 +185,7 @@
   }
   
   .section .thumb .main-border-button a:hover {
-    background: #ff3eff;
+    background: #43409c;
   }
   
   /* Espaciado */
@@ -194,5 +194,22 @@
     margin-bottom: 60px;
   }
   
-
-   
+  .item img {
+    transition: transform 0.3s ease;
+  }
+  
+  .item img:hover {
+    transform: scale(1.05);
+  }
+  
+  body {
+    padding-top: 100px; /* asegura espacio debajo del navbar */
+  }
+  
+  header.header-area {
+    z-index: 1000; /* navbar siempre por encima */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
