@@ -1,4 +1,4 @@
 from django.shortcuts import render
 
-def index(request):
-    return render(request, 'base.html')
+def detalle_carrito(request):
+    return render(request, "carrito/detalle.html")

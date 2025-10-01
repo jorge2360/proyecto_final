@@ -38,7 +38,7 @@
                         </a>
                         <!-- Menu -->
                         <ul class="nav">
-                            <li class="scroll-to-section"><a href="{% url 'home' %}" class="active">Inicio</a></li>
+                            <li><a href="{% url 'home' %}" class="active">Inicio</a></li>
                             <li><a href="{% url 'productos:lista' %}">Productos</a></li>
                             <li class="submenu">
                                 <a href="javascript:;">Categorías</a>
@@ -48,6 +48,22 @@
                                     <li><a href="{% url 'productos:categoria' 'Niños' %}">Niños</a></li>
                                     <li><a href="{% url 'productos:categoria' 'Accesorios' %}">Accesorios</a></li>
                                 </ul>
+                            </li>
+
+                            <!-- Botón dinámico Login / Registro o Mi cuenta -->
+                            {% if user.is_authenticated %}
+                                <li><a href="#">Mi cuenta ({{ user.username }})</a></li>
+                                <li><a href="{% url 'usuarios:logout' %}">Cerrar sesión</a></li>
+                            {% else %}
+                                <li><a href="{% url 'usuarios:login' %}">Iniciar sesión</a></li>
+                                <li><a href="{% url 'usuarios:registro_cliente' %}">Registrarse</a></li>
+                            {% endif %}
+
+                            <!-- Botón del carrito -->
+                            <li>
+                                <a href="{% url 'carrito:detalle' %}">
+                                    <i class="fa fa-shopping-cart"></i> Carrito
+                                </a>
                             </li>
                         </ul>        
                         <a class="menu-trigger"><span>Menú</span></a>
