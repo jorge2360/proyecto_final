@@ -1,43 +1,33 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends "base.html" %}
 
 {% block content %}
-
-<section class="section" id="category-products">
-  <div class="container">
+<div class="container mt-4">
+    <h2>{{ categoria.nombre }}</h2>
+    <p>{{ categoria.descripcion }}</p>
     <div class="row">
-      <div class="col-lg-12">
-        <div class="section-heading text-center">
-          <h2>{{ categoria.nombre }}</h2>
-          <span>{{ categoria.descripcion }}</span>
-        </div>
-      </div>
+        {% for producto in productos %}
+            <div class="col-md-3">
+                <div class="card mb-4">
+                    {% if producto.imagen %}
+                        <a href="{% url 'productos:detalle' producto.pk %}">
+                            <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                        </a>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5>
+                            <a href="{% url 'productos:detalle' producto.pk %}">{{ producto.nombre }}</a>
+                        </h5>
+                        <p><strong>Q{{ producto.precio }}</strong></p>
+                        <p>Stock: {{ producto.stock }}</p>
+                        {% if producto.destacado %}
+                            <span class="badge bg-success">Destacado</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>No hay productos en esta categoría.</p>
+        {% endfor %}
     </div>
-
-    <div class="row">
-      {% for producto in productos %}
-      <div class="col-lg-3 col-md-4 col-sm-6 mb-5">
-        <div class="item text-center">
-          <div class="thumb">
-            <a href="{% url 'productos:detalle' producto.pk %}">
-              {% if producto.imagen %}
-                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="img-fluid rounded shadow-sm">
-              {% else %}
-                <img src="{% static 'images/no-image.png' %}" alt="Sin imagen" class="img-fluid rounded shadow-sm">
-              {% endif %}
-            </a>
-          </div>
-          <div class="down-content mt-3">
-            <h5>{{ producto.nombre }}</h5>
-            <span class="text-success fw-bold">Q {{ producto.precio }}</span>
-          </div>
-        </div>
-      </div>
-      {% empty %}
-      <p class="text-center">No hay productos en esta categoría.</p>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-
+</div>
 {% endblock %}

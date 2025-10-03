@@ -2,9 +2,28 @@
 	"use strict";
   
 	// ===============================
-	// Carruseles (Men, Women, Kids)
+	// Carruseles (Men, Women, Kids del template original)
 	// ===============================
 	$(".owl-men-item, .owl-women-item, .owl-kid-item").owlCarousel({
+	  items: 4,
+	  loop: true,
+	  dots: true,
+	  nav: true,
+	  margin: 20,
+	  autoplay: true,
+	  autoplayTimeout: 4000,
+	  responsive: {
+		0: { items: 1 },
+		576: { items: 2 },
+		768: { items: 3 },
+		992: { items: 4 }
+	  }
+	});
+
+	// ===============================
+	// Carruseles de productos destacados (NUEVO)
+	// ===============================
+	$(".men-item-carousel, .women-item-carousel, .kids-item-carousel, .accessories-item-carousel").owlCarousel({
 	  items: 4,
 	  loop: true,
 	  dots: true,
@@ -104,5 +123,4 @@
 	  mobileNav();
 	});
   
-  })(window.jQuery);
-  
+})(window.jQuery);

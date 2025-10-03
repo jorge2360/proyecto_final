@@ -113,9 +113,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = "usuarios.Usuario"
-# Redirecciones después de login/logout/registro
-LOGIN_REDIRECT_URL = "home"   # después de iniciar sesión
-LOGOUT_REDIRECT_URL = "home"  # después de cerrar sesión
+# Redirecciones despues de login/logout/registro
+LOGIN_REDIRECT_URL = "home"   # despues de iniciar sesion
+LOGOUT_REDIRECT_URL = "home"  # despues de cerrar sesion
 
 
 # Internationalization
