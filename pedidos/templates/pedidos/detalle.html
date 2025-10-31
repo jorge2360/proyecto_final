@@ -1,25 +1,62 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container mt-5">
-  <div class="card shadow-sm border-0 p-4">
-    <h4 class="fw-bold mb-3">Pedido #{{ pedido.id }}</h4>
-    <p><strong>Estado:</strong> {{ pedido.estado|title }}</p>
-    <p><strong>Dirección:</strong> {{ pedido.direccion_envio }}</p>
-    <p><strong>Fecha:</strong> {{ pedido.creado|date:"d/m/Y H:i" }}</p>
 
-    <hr>
-    <ul class="list-group">
-      {% for item in pedido.items.all %}
-        <li class="list-group-item d-flex justify-content-between">
-          <span>{{ item.producto.nombre }} (x{{ item.cantidad }})</span>
-          <span>Q{{ item.subtotal|floatformat:2 }}</span>
-        </li>
-      {% endfor %}
-      <li class="list-group-item d-flex justify-content-between fw-bold">
-        <span>Total</span>
-        <span class="text-success">Q{{ pedido.total|floatformat:2 }}</span>
-      </li>
-    </ul>
+<style>
+  .pedido-confirmado {
+    text-align: center;
+    padding: 60px 20px;
+  }
+  .pedido-confirmado i {
+    color: #28a745;
+    font-size: 80px;
+  }
+  .pedido-confirmado h2 {
+    font-weight: 700;
+    color: #2c3e50;
+  }
+  .pedido-info {
+    max-width: 600px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px 30px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+  .pedido-info ul {
+    list-style: none;
+    padding: 0;
+  }
+  .pedido-info li {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+  }
+</style>
+
+<div class="pedido-confirmado">
+  <i class="bi bi-check-circle-fill"></i>
+  <h2>¡Gracias por tu compra!</h2>
+  <p class="text-muted">Tu pedido #{{ pedido.id }} fue registrado correctamente.</p>
+</div>
+
+<div class="pedido-info">
+  <h5 class="fw-bold mb-3">Resumen del pedido</h5>
+  <ul>
+    {% for item in pedido.items.all %}
+    <li class="d-flex justify-content-between">
+      <span>{{ item.producto.nombre }} (x{{ item.cantidad }})</span>
+      <span>Q{{ item.subtotal|floatformat:2 }}</span>
+    </li>
+    {% endfor %}
+    <li class="fw-bold d-flex justify-content-between">
+      <span>Total</span>
+      <span class="text-success">Q{{ pedido.total|floatformat:2 }}</span>
+    </li>
+  </ul>
+  <div class="text-center mt-4">
+    <a href="{% url 'productos:lista' %}" class="btn btn-primary">
+      <i class="bi bi-arrow-left-circle"></i> Seguir comprando
+    </a>
   </div>
 </div>
+
 {% endblock %}

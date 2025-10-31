@@ -16,12 +16,19 @@
         {% for item in items %}
           <tr>
             <td>{{ item.producto.nombre }}</td>
-            <td>{{ item.cantidad }}</td>
-            <td>Q{{ item.subtotal }}</td>
-            <td>
-              <a href="{% url 'carrito:eliminar' item.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+            <td>Q{{ item.producto.precio }}</td>
+            <td class="text-center">
+              {{ item.cantidad }}
+              <form action="{% url 'carrito:eliminar' item.producto.id %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-outline-danger ms-2">
+                  <i class="bi bi-dash-circle"></i>
+                </button>
+              </form>
             </td>
+            <td>Q{{ item.subtotal }}</td>
           </tr>
+
         {% endfor %}
       </tbody>
     </table>

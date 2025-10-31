@@ -33,8 +33,9 @@ def checkout(request):
         # Crear el pedido
         pedido = Pedido.objects.create(
             usuario=request.user,
+            direccion_envio=getattr(request.user, "direccion", "Sin dirección registrada"),
             total=total,
-            direccion_envio=direccion,
+            estado="pendiente"
         )
 
         # Crear los items del pedido

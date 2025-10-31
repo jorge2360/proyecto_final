@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    .checkout-confirmation {
+        min-height: 80vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #f0f4f8, #ffffff);
+        padding: 40px 0;
+    }
+
+    .confirmation-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        padding: 40px 50px;
+        text-align: center;
+        max-width: 650px;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .confirmation-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .confirmation-icon {
+        font-size: 4rem;
+        color: #28a745;
+        margin-bottom: 20px;
+        animation: pop 0.6s ease;
+    }
+
+    @keyframes pop {
+        0% { transform: scale(0.5); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    .summary-box {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 25px;
+        text-align: left;
+    }
+
+    .summary-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+    }
+
+    .summary-item span:last-child {
+        font-weight: 600;
+    }
+
+    .btn-custom {
+        background: #007bff;
+        color: white;
+        border-radius: 50px;
+        padding: 10px 25px;
+        margin-top: 25px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-custom:hover {
+        background: #0056b3;
+        color: white;
+        transform: translateY(-2px);
+    }
+</style>
+
+<div class="checkout-confirmation">
+    <div class="confirmation-card">
+        <i class="bi bi-check-circle-fill confirmation-icon"></i>
+        <h2 class="fw-bold text-success mb-2">¡Gracias por tu compra!</h2>
+        <p class="text-muted mb-4">
+            Tu pedido <strong>#{{ pedido.id }}</strong> ha sido procesado correctamente.
+        </p>
+
+        <div class="summary-box">
+            <h5 class="mb-3">🧾 Resumen del pedido</h5>
+            {% for item in pedido.items.all %}
+                <div class="summary-item">
+                    <span>{{ item.producto.nombre }} (x{{ item.cantidad }})</span>
+                    <span>Q{{ item.subtotal }}</span>
+                </div>
+            {% endfor %}
+            <hr>
+            <div class="summary-item">
+                <span>Subtotal</span>
+                <span>Q{{ pedido.total|floatformat:2 }}</span>
+            </div>
+            <div class="summary-item fw-bold text-primary">
+                <span>Total pagado</span>
+                <span>Q{{ pedido.total|floatformat:2 }}</span>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <p class="text-muted small">
+                Recibirás un correo con los detalles del pedido y el estado del envío.
+            </p>
+            <a href="{% url 'productos:lista' %}" class="btn btn-custom">
+                <i class="bi bi-arrow-left-circle me-2"></i> Volver a la tienda
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

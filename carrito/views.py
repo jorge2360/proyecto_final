@@ -2,12 +2,17 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
+from django.db import transaction
+
 from pedidos.models import Pedido, PedidoItem
 from pagos.models import Pago
 from .models import Carrito, CarritoItem
 from productos.models import Producto
 
 
+# ================================
+# Obtener o crear carrito
+# ================================
 def _get_or_create_cart(request):
     if request.user.is_authenticated:
         carrito, _ = Carrito.objects.get_or_create(usuario=request.user)
@@ -30,7 +35,6 @@ def _get_or_create_cart(request):
                     session_cart.delete()
             except Carrito.DoesNotExist:
                 pass
-
         return carrito
 
     if not request.session.session_key:
@@ -41,8 +45,9 @@ def _get_or_create_cart(request):
     )
     return carrito
 
+
 # ================================
-# Mostrar el carrito
+# Mostrar carrito
 # ================================
 def detalle_carrito(request):
     carrito = _get_or_create_cart(request)
@@ -55,8 +60,9 @@ def detalle_carrito(request):
         {"carrito": carrito, "items": items, "total": total},
     )
 
+
 # ================================
-# Agregar producto al carrito
+# Agregar producto
 # ================================
 @require_POST
 def agregar_al_carrito(request, producto_id):
@@ -67,13 +73,12 @@ def agregar_al_carrito(request, producto_id):
     if cantidad < 1:
         cantidad = 1
 
-    # Asigna el objeto usuario (no el id)
     usuario = request.user if request.user.is_authenticated else None
 
     item, created = CarritoItem.objects.get_or_create(
         carrito=carrito,
         producto=producto,
-        defaults={"cantidad": cantidad, "usuario": usuario},  # 👈 aquí el cambio
+        defaults={"cantidad": cantidad, "usuario": usuario},
     )
 
     if not created:
@@ -83,18 +88,26 @@ def agregar_al_carrito(request, producto_id):
     messages.success(request, f"“{producto.nombre}” se agregó al carrito.")
     return redirect("carrito:detalle")
 
+
 # ================================
-# Eliminar un ítem
+# Eliminar producto
 # ================================
+@require_POST
 def eliminar_item(request, producto_id):
     carrito = _get_or_create_cart(request)
     try:
         item = CarritoItem.objects.get(carrito=carrito, producto_id=producto_id)
-        item.delete()
-        messages.info(request, "Producto eliminado del carrito.")
+        if item.cantidad > 1:
+            item.cantidad -= 1
+            item.save()
+            messages.info(request, f"Se redujo la cantidad de {item.producto.nombre}.")
+        else:
+            item.delete()
+            messages.info(request, "Producto eliminado del carrito.")
     except CarritoItem.DoesNotExist:
         messages.warning(request, "Ese producto no estaba en tu carrito.")
     return redirect("carrito:detalle")
+
 
 # ================================
 # Vaciar carrito
@@ -105,10 +118,12 @@ def vaciar_carrito(request):
     messages.info(request, "Carrito vaciado.")
     return redirect("carrito:detalle")
 
+
 # ================================
 # Checkout (pago)
 # ================================
 @login_required
+@transaction.atomic
 def checkout(request):
     carrito = _get_or_create_cart(request)
     items = carrito.items.select_related("producto")
@@ -123,42 +138,73 @@ def checkout(request):
         metodo_pago = request.POST.get("metodo_pago")
         if metodo_pago not in ["transferencia", "tarjeta", "efectivo"]:
             messages.error(request, "Seleccione un método de pago válido.")
-            return redirect("pagos:checkout")
+            return redirect("carrito:checkout")
 
-        # Crear pedido
-        pedido = Pedido.objects.create(
-            usuario=request.user,
-            direccion_envio=request.user.direccion,
-            total=total,
-            estado="pendiente"
-        )
-
-        # Crear los ítems del pedido
-        for item in items:
-            PedidoItem.objects.create(
-                pedido=pedido,
-                producto=item.producto,
-                cantidad=item.cantidad,
-                precio=item.producto.precio,
+        try:
+            # ✅ Dirección de envío asegurada (nunca NULL)
+            direccion_envio = (
+                request.POST.get("direccion_envio")
+                or getattr(request.user, "direccion", None)
+                or "Dirección no especificada"
             )
 
-        # Registrar el pago
-        Pago.objects.create(
-            pedido=pedido,
-            usuario=request.user,
-            metodo=metodo_pago,
-            monto=total,
-            confirmado=False  # Se puede cambiar al confirmar manualmente
-        )
+            # 1️⃣ Crear pedido
+            pedido = Pedido.objects.create(
+                usuario=request.user,
+                direccion_envio=direccion_envio,
+                total=total,
+                estado="pendiente"
+            )
 
-        # Vaciar carrito
-        carrito.items.all().delete()
+            # 2️⃣ Crear ítems y descontar stock
+            for item in items:
+                producto = item.producto
 
-        messages.success(request, f"¡Pedido #{pedido.id} creado correctamente!")
-        return redirect("pedidos:detalle", pedido_id=pedido.id)
+                if producto.stock < item.cantidad:
+                    messages.warning(request, f"Stock insuficiente para {producto.nombre}.")
+                    pedido.delete()
+                    return redirect("carrito:detalle")
+
+                producto.stock -= item.cantidad
+                producto.save()
+
+                PedidoItem.objects.create(
+                    pedido=pedido,
+                    producto=producto,
+                    cantidad=item.cantidad,
+                    precio=producto.precio,
+                )
+
+            # 3️⃣ Registrar pago
+            Pago.objects.create(
+                pedido=pedido,
+                usuario=request.user,
+                metodo=metodo_pago,
+                monto=total,
+                confirmado=False,
+            )
+
+            # 4️⃣ Vaciar carrito
+            carrito.items.all().delete()
+
+            messages.success(request, f"¡Pedido #{pedido.id} creado correctamente!")
+            print(f"[CHECKOUT OK] Pedido #{pedido.id} | Usuario: {request.user.username} | Total: {total}")
+            return redirect("carrito:confirmacion", pedido_id=pedido.id)
+
+        except Exception as e:
+            print(f"[CHECKOUT ERROR] {type(e).__name__}: {e}")
+            messages.error(request, "Ocurrió un error al procesar tu compra. Intenta nuevamente.")
+            return redirect("carrito:detalle")
 
     return render(
         request,
         "pagos/checkout.html",
         {"carrito": carrito, "items": items, "total": total}
     )
+@login_required
+def confirmacion(request, pedido_id):
+    """Pantalla de confirmación de compra"""
+    from pedidos.models import Pedido  # evitar import circular
+    pedido = get_object_or_404(Pedido, id=pedido_id, usuario=request.user)
+
+    return render(request, "carrito/confirmacion.html", {"pedido": pedido})
