@@ -7,4 +7,5 @@ urlpatterns = [
     path("lista/", views.lista_productos, name="lista"),
     path("<int:pk>/", views.detalle_producto, name="detalle"),
     path("categoria/<str:nombre>/", views.productos_por_categoria, name="categoria"),
+    path("buscar/", views.buscar_producto, name="buscar"),
 ]

@@ -41,3 +41,8 @@ def productos_por_categoria(request, nombre):
         "categoria": categoria,
         "productos": productos,
     })
+
+def buscar_producto(request):
+    query = request.GET.get("q")
+    resultados = Producto.objects.filter(nombre__icontains=query) if query else []
+    return render(request, "productos/buscar.html", {"resultados": resultados, "query": query})
