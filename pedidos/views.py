@@ -1,33 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from carrito.models import CarritoItem
-from .models import Pedido, DetallePedido
-from django.contrib import messages
+from .models import Pedido
 
 @login_required
-def checkout(request):
-    carrito_items = CarritoItem.objects.filter(usuario=request.user)
-    if not carrito_items.exists():
-        messages.warning(request, "Tu carrito está vacío.")
-        return redirect("carrito:detalle")
-
-    total = sum(item.subtotal() for item in carrito_items)
-
-    if request.method == "POST":
-        pedido = Pedido.objects.create(usuario=request.user, total=total, estado="pendiente")
-
-        for item in carrito_items:
-            DetallePedido.objects.create(
-                pedido=pedido,
-                producto=item.producto,
-                cantidad=item.cantidad,
-                subtotal=item.subtotal()
-            )
-            item.producto.stock -= item.cantidad
-            item.producto.save()
-
-        carrito_items.delete()  # limpiar carrito
-        messages.success(request, f"Pedido #{pedido.id} realizado con éxito.")
-        return redirect("home")
-
-    return render(request, "pedidos/checkout.html", {"items": carrito_items, "total": total})
+def detalle_pedido(request, pedido_id):
+    pedido = get_object_or_404(Pedido, id=pedido_id, usuario=request.user)
+    return render(request, "pedidos/detalle.html", {"pedido": pedido})

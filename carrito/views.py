@@ -2,7 +2,8 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
-
+from pedidos.models import Pedido, PedidoItem
+from pagos.models import Pago
 from .models import Carrito, CarritoItem
 from productos.models import Producto
 
@@ -111,10 +112,53 @@ def vaciar_carrito(request):
 def checkout(request):
     carrito = _get_or_create_cart(request)
     items = carrito.items.select_related("producto")
-    total = sum(item.producto.precio * item.cantidad for item in items)
 
     if not items.exists():
         messages.warning(request, "Tu carrito está vacío.")
         return redirect("productos:lista")
 
-    return render(request, "pagos/checkout.html", {"carrito": carrito, "items": items, "total": total})
+    total = sum(item.producto.precio * item.cantidad for item in items)
+
+    if request.method == "POST":
+        metodo_pago = request.POST.get("metodo_pago")
+        if metodo_pago not in ["transferencia", "tarjeta", "efectivo"]:
+            messages.error(request, "Seleccione un método de pago válido.")
+            return redirect("pagos:checkout")
+
+        # Crear pedido
+        pedido = Pedido.objects.create(
+            usuario=request.user,
+            direccion_envio=request.user.direccion,
+            total=total,
+            estado="pendiente"
+        )
+
+        # Crear los ítems del pedido
+        for item in items:
+            PedidoItem.objects.create(
+                pedido=pedido,
+                producto=item.producto,
+                cantidad=item.cantidad,
+                precio=item.producto.precio,
+            )
+
+        # Registrar el pago
+        Pago.objects.create(
+            pedido=pedido,
+            usuario=request.user,
+            metodo=metodo_pago,
+            monto=total,
+            confirmado=False  # Se puede cambiar al confirmar manualmente
+        )
+
+        # Vaciar carrito
+        carrito.items.all().delete()
+
+        messages.success(request, f"¡Pedido #{pedido.id} creado correctamente!")
+        return redirect("pedidos:detalle", pedido_id=pedido.id)
+
+    return render(
+        request,
+        "pagos/checkout.html",
+        {"carrito": carrito, "items": items, "total": total}
+    )

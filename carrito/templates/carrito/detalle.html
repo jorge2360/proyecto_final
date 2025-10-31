@@ -27,7 +27,12 @@
     </table>
     <h4>Total: Q{{ total }}</h4>
     <a href="{% url 'carrito:vaciar' %}" class="btn btn-secondary">Vaciar carrito</a>
-    <a href="{% url 'pedidos:checkout' %}" class="btn btn-primary">Proceder al pago</a>
+    <div class="text-end mt-3">
+    <a href="{% url 'pagos:checkout' %}" class="btn btn-primary btn-lg shadow-sm">
+      <i class="bi bi-bag-check-fill"></i> Ir al Checkout
+    </a>
+  </div>
+
   {% else %}
     <p>No hay productos en tu carrito.</p>
   {% endif %}

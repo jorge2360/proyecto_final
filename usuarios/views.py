@@ -4,7 +4,10 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import ClienteRegistroForm, AdminRegistroForm
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.views import LoginView
+# --- Vista personalizada de login ---
+class CustomLoginView(LoginView):
+    template_name = "usuarios/login.html"
 
 # --- Registro cliente ---
 def registro_cliente(request):

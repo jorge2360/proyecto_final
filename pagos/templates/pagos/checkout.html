@@ -1,15 +1,97 @@
 {% extends "base.html" %}
-
 {% block content %}
-<div class="container mt-5">
-  <h2>Checkout</h2>
-  <p>Resumen de tu compra:</p>
 
-  <!-- Aqui en el futuro podemos mostrar productos del carrito -->
-  <div class="alert alert-info">
-    (Simulación) Aquí aparecerán los productos agregados al carrito.
+<style>
+  .checkout-card {
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+  .checkout-option {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .checkout-option:hover {
+    border-color: #0d6efd;
+    background: #f8f9ff;
+  }
+  .checkout-option input {
+    accent-color: #0d6efd;
+  }
+  .total-summary {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #198754;
+  }
+</style>
+
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+      <div class="card checkout-card p-4 border-0">
+        <h3 class="fw-bold text-center mb-4 text-primary">
+          <i class="bi bi-credit-card"></i> Finalizar compra
+        </h3>
+
+        <div class="mb-4">
+          <h5 class="fw-bold text-secondary mb-3">Resumen de tu pedido</h5>
+          <ul class="list-group mb-3">
+            {% for item in items %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>{{ item.producto.nombre }} (x{{ item.cantidad }})</span>
+              <span>Q{{ item.producto.precio|floatformat:2 }}</span>
+            </li>
+            {% endfor %}
+            <li class="list-group-item d-flex justify-content-between">
+              <strong>Total</strong>
+              <span class="total-summary">Q{{ total|floatformat:2 }}</span>
+            </li>
+          </ul>
+        </div>
+
+        <form method="post" class="mt-3">
+          {% csrf_token %}
+          <h5 class="fw-bold text-secondary mb-3">Seleccione su método de pago</h5>
+
+          <div class="d-flex flex-column gap-3">
+            <label class="checkout-option d-flex align-items-center justify-content-between">
+              <div>
+                <input type="radio" name="metodo_pago" value="tarjeta" required>
+                <i class="bi bi-credit-card text-primary ms-2"></i>
+                <span class="ms-2 fw-semibold">Tarjeta de Crédito / Débito</span>
+              </div>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Tarjeta" height="24">
+            </label>
+
+            <label class="checkout-option d-flex align-items-center justify-content-between">
+              <div>
+                <input type="radio" name="metodo_pago" value="transferencia" required>
+                <i class="bi bi-bank text-primary ms-2"></i>
+                <span class="ms-2 fw-semibold">Transferencia Bancaria</span>
+              </div>
+              <img src="https://cdn-icons-png.flaticon.com/512/2250/2250256.png" alt="Banco" height="24">
+            </label>
+
+            <label class="checkout-option d-flex align-items-center justify-content-between">
+              <div>
+                <input type="radio" name="metodo_pago" value="efectivo" required>
+                <i class="bi bi-cash-stack text-success ms-2"></i>
+                <span class="ms-2 fw-semibold">Pago en efectivo</span>
+              </div>
+              <img src="https://cdn-icons-png.flaticon.com/512/3208/3208707.png" alt="Efectivo" height="24">
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-success w-100 mt-4 shadow-sm py-2 fw-semibold">
+            <i class="bi bi-check-circle-fill"></i> Confirmar pedido
+          </button>
+        </form>
+      </div>
+    </div>
   </div>
-
-  <button class="btn btn-success">Proceder al Pago</button>
 </div>
+
 {% endblock %}

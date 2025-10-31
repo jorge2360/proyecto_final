@@ -4,6 +4,5 @@ from . import views
 app_name = "pagos"
 
 urlpatterns = [
-    path('', views.index, name='index'),            
-    path('checkout/', views.checkout, name='checkout'),  
+    path("checkout/", views.checkout, name="checkout"),
 ]
