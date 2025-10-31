@@ -8,12 +8,6 @@ from productos.models import Producto
 
 
 def _get_or_create_cart(request):
-    """
-    Obtiene o crea el carrito para el usuario actual.
-    - Si está autenticado, usa su carrito personal.
-    - Si es anónimo, usa el session_key.
-    - Fusiona carrito de sesión con el de usuario al iniciar sesión.
-    """
     if request.user.is_authenticated:
         carrito, _ = Carrito.objects.get_or_create(usuario=request.user)
 
@@ -46,7 +40,6 @@ def _get_or_create_cart(request):
     )
     return carrito
 
-
 # ================================
 # Mostrar el carrito
 # ================================
@@ -61,7 +54,6 @@ def detalle_carrito(request):
         {"carrito": carrito, "items": items, "total": total},
     )
 
-
 # ================================
 # Agregar producto al carrito
 # ================================
@@ -70,17 +62,17 @@ def agregar_al_carrito(request, producto_id):
     carrito = _get_or_create_cart(request)
     producto = get_object_or_404(Producto, pk=producto_id)
 
-    try:
-        cantidad = int(request.POST.get("cantidad", 1))
-        if cantidad < 1:
-            cantidad = 1
-    except (TypeError, ValueError):
+    cantidad = int(request.POST.get("cantidad", 1))
+    if cantidad < 1:
         cantidad = 1
+
+    # Asigna el objeto usuario (no el id)
+    usuario = request.user if request.user.is_authenticated else None
 
     item, created = CarritoItem.objects.get_or_create(
         carrito=carrito,
         producto=producto,
-        defaults={"cantidad": cantidad, "usuario": getattr(request.user, "id", None)},
+        defaults={"cantidad": cantidad, "usuario": usuario},  # 👈 aquí el cambio
     )
 
     if not created:
@@ -89,7 +81,6 @@ def agregar_al_carrito(request, producto_id):
 
     messages.success(request, f"“{producto.nombre}” se agregó al carrito.")
     return redirect("carrito:detalle")
-
 
 # ================================
 # Eliminar un ítem
@@ -104,7 +95,6 @@ def eliminar_item(request, producto_id):
         messages.warning(request, "Ese producto no estaba en tu carrito.")
     return redirect("carrito:detalle")
 
-
 # ================================
 # Vaciar carrito
 # ================================
@@ -113,7 +103,6 @@ def vaciar_carrito(request):
     carrito.items.all().delete()
     messages.info(request, "Carrito vaciado.")
     return redirect("carrito:detalle")
-
 
 # ================================
 # Checkout (pago)
