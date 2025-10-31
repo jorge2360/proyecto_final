@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Mi Perfil</h2>
+  <p><strong>Usuario:</strong> {{ user.username }}</p>
+  <p><strong>Email:</strong> {{ user.email }}</p>
+  <p><strong>Teléfono:</strong> {{ user.telefono }}</p>
+  <p><strong>Dirección:</strong> {{ user.direccion }}</p>
+
+  <div class="mt-4">
+    <a href="{% url 'usuarios:editar_perfil' %}" class="btn btn-primary">Editar perfil</a>
+    <a href="{% url 'usuarios:logout' %}" class="btn btn-secondary">Cerrar sesión</a>
+  </div>
+</div>
+{% endblock %}

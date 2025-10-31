@@ -32,6 +32,12 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <span class="nav-link">👋 Hola, {{ user.username }}</span>
+                        </li>   
+                        {% endif %}
+
                         <!-- Logo -->
                         <a href="{% url 'home' %}" class="logo">
                             <img src="{% static 'images/offtherack_logo.jpg' %}" alt="OffTheRack Logo" class="logo-img">
@@ -107,5 +113,6 @@
     <script src="{% static 'js/lightbox.js' %}"></script> 
     <script src="{% static 'js/isotope.js' %}"></script> 
     <script src="{% static 'js/custom.js' %}"></script>
+    {% include 'partials/footer.html' %}
 </body>
 </html>

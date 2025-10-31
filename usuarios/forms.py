@@ -10,7 +10,7 @@ class ClienteRegistroForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.rol = "cliente"   # importante: se asigna automáticamente
+        user.rol = "cliente"   
         if commit:
             user.save()
         return user
@@ -23,7 +23,7 @@ class AdminRegistroForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.is_staff = True  # lo forzamos como administrador
+        user.is_staff = True  
         if commit:
             user.save()
         return user

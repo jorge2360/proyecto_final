@@ -60,3 +60,7 @@ def logout_view(request):
     logout(request)
     messages.info(request, "Sesión cerrada correctamente.")
     return redirect("home")
+# --- Perfil de usuario ---
+@login_required
+def perfil(request):
+    return render(request, "usuarios/perfil.html")
