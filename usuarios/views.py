@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from .forms import ClienteRegistroForm, AdminRegistroForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
+from django.shortcuts import render
 # --- Vista personalizada de login ---
 class CustomLoginView(LoginView):
     template_name = "usuarios/login.html"
@@ -58,12 +59,13 @@ def login_view(request):
 
 
 # --- Logout ---
-@login_required
-def logout_view(request):
+def cerrar_sesion(request):
+    """Cierra la sesión del usuario y lo redirige a la tienda."""
     logout(request)
-    messages.info(request, "Sesión cerrada correctamente.")
-    return redirect("home")
-# --- Perfil de usuario ---
+    messages.info(request, "Ha cerrado sesión correctamente.")
+    return redirect("productos:lista")
+
 @login_required
 def perfil(request):
-    return render(request, "usuarios/perfil.html")
+    """Muestra el perfil del usuario logueado"""
+    return render(request, "usuarios/perfil.html", {"usuario": request.user})

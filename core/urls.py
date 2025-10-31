@@ -23,7 +23,8 @@ from productos.views import home
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", home, name="home"), 
-    path("accounts/", include("usuarios.urls")),
+    path("usuarios/", include("usuarios.urls")),
+    path("accounts/", include("django.contrib.auth.urls")), 
     path('productos/', include('productos.urls')),
     path('pedidos/', include('pedidos.urls')),
     path('carrito/', include('carrito.urls')),
