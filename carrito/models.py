@@ -5,21 +5,19 @@ from productos.models import Producto
 
 
 class Carrito(models.Model):
-    user = models.ForeignKey(
+    usuario = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         null=True, blank=True,
         on_delete=models.CASCADE,
         related_name="carritos",
     )
-    session_key = models.CharField(
-        max_length=40, null=True, blank=True, db_index=True
-    )
+    session_key = models.CharField(max_length=40, null=True, blank=True, db_index=True)
     creado = models.DateTimeField(auto_now_add=True)
     actualizado = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        if self.user:
-            return f"Carrito de {self.user}"
+        if self.usuario:
+            return f"Carrito de {self.usuario}"
         return f"Carrito sesión {self.session_key}"
 
     @property
@@ -31,22 +29,17 @@ class Carrito(models.Model):
 
 
 class CarritoItem(models.Model):
-    carrito = models.ForeignKey(
-        Carrito, on_delete=models.CASCADE, related_name="items"
-    )
+    carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE, related_name="items")
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.PositiveIntegerField(default=1)
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True
+    )
     creado = models.DateTimeField(auto_now_add=True)
     actualizado = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        unique_together = ("carrito", "producto")
+    def subtotal(self):
+        return self.producto.precio * self.cantidad
 
     def __str__(self):
-        return f"{self.producto} x {self.cantidad}"
-
-    @property
-    def subtotal(self):
-        if self.producto and self.producto.precio is not None:
-            return self.producto.precio * self.cantidad
-        return Decimal("0.00")
+        return f"{self.producto.nombre} ({self.cantidad})"
