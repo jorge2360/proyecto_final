@@ -1,0 +1,53 @@
+{% extends 'dashboard/panel_base.html' %}
+{% load static %}
+{% block content %}
+<h4><i class="bi bi-graph-up-arrow"></i> Estadísticas de Ventas</h4>
+
+<div class="row g-3 mt-3">
+  <div class="col-md-4">
+    <div class="card border-0 shadow-sm text-center">
+      <div class="card-body">
+        <h6 class="text-muted">Total de Pedidos</h6>
+        <h3>{{ total_pedidos }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card border-0 shadow-sm text-center">
+      <div class="card-body">
+        <h6 class="text-muted">Pedidos Pendientes</h6>
+        <h3>{{ pedidos_pendientes }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card border-0 shadow-sm text-center">
+      <div class="card-body">
+        <h6 class="text-muted">Ventas Totales</h6>
+        <h3>Q{{ ventas_totales|floatformat:2 }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card mt-4 shadow-sm border-0">
+  <div class="card-body">
+    <h6 class="text-muted mb-3">Pedidos por mes</h6>
+    <canvas id="chartPedidos" height="100"></canvas>
+  </div>
+</div>
+
+<!-- Bloque JSON oculto para pasar datos -->
+<script id="chartData" type="application/json">
+{
+  "labels": [{% for m in pedidos_por_mes %}"Mes {{ m.mes }}"{% if not forloop.last %},{% endif %}{% endfor %}],
+  "values": [{% for m in pedidos_por_mes %}{{ m.cantidad }}{% if not forloop.last %},{% endif %}{% endfor %}]
+}
+</script>
+
+<!-- Librería Chart.js y script externo -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'dashboard/js/estadisticas.js' %}"></script>
+{% endblock %}

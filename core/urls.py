@@ -29,5 +29,6 @@ urlpatterns = [
     path('pedidos/', include('pedidos.urls')),
     path('carrito/', include('carrito.urls')),
     path('pagos/', include('pagos.urls')),
+    path('dashboard/', include('dashboard.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
