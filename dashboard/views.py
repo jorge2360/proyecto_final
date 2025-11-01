@@ -5,6 +5,7 @@ from productos.forms import ProductoForm
 from pedidos.models import Pedido
 from django.db.models import Sum, Count
 import datetime
+from django.db.models.functions import ExtractMonth, ExtractYear
 
 # Verifica si el usuario es admin o superusuario
 def es_admin_tienda(user):
@@ -56,8 +57,21 @@ def producto_eliminar(request, pk):
 # === LISTA DE PEDIDOS ===
 @user_passes_test(es_admin_tienda)
 def pedidos_lista(request):
-    pedidos = Pedido.objects.all().order_by('-fecha_creacion')
-    return render(request, 'dashboard/pedidos_lista.html', {'pedidos': pedidos})
+    pedidos = Pedido.objects.select_related('usuario').order_by('-creado')
+
+    # Preparamos los datos para mostrarlos correctamente
+    pedidos_data = []
+    for p in pedidos:
+        pedidos_data.append({
+            'id': p.id,
+            'cliente': f"{p.usuario.first_name} {p.usuario.last_name}".strip() or p.usuario.username,
+            'fecha': p.creado.strftime("%d/%m/%Y %H:%M"),
+            'estado': p.estado.capitalize(),
+            'total': f"{p.total:.2f}",
+        })
+
+    return render(request, 'dashboard/pedidos_lista.html', {'pedidos': pedidos_data})
+
 
 # === CAMBIO DE ESTADO (opcional rápido) ===
 @user_passes_test(es_admin_tienda)
@@ -80,12 +94,15 @@ def estadisticas(request):
 
     # Gráfico simple: pedidos por mes
     pedidos_por_mes = (
-        Pedido.objects
-        .extra(select={'mes': "strftime('%%m', fecha_creacion)"})
-        .values('mes')
-        .annotate(cantidad=Count('id'))
-        .order_by('mes')
+    Pedido.objects
+    .annotate(
+        mes=ExtractMonth('creado'),
+        anio=ExtractYear('creado')
     )
+    .values('mes', 'anio')
+    .annotate(cantidad=Count('id'))
+    .order_by('anio', 'mes')
+)
 
     context = {
         'total_pedidos': total_pedidos,

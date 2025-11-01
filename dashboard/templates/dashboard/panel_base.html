@@ -21,9 +21,6 @@
         <li class="nav-item mb-2">
           <a href="{% url 'dashboard:productos_lista' %}" class="nav-link text-white"><i class="bi bi-box-seam me-2"></i>Productos</a>
         </li>
-        <li class="nav-item mt-3">
-          <a href="{% url 'home' %}" class="nav-link text-secondary"><i class="bi bi-arrow-left-circle me-2"></i>Volver al sitio</a>
-        </li>
         <li class="nav-item mb-2">
         <a href="{% url 'dashboard:pedidos_lista' %}" class="nav-link text-white">
             <i class="bi bi-bag-check me-2"></i>Pedidos
@@ -33,6 +30,9 @@
         <a href="{% url 'dashboard:estadisticas' %}" class="nav-link text-white">
             <i class="bi bi-graph-up-arrow me-2"></i>Estadísticas
         </a>
+        </li>
+        <li class="nav-item mt-3">
+          <a href="{% url 'home' %}" class="nav-link text-secondary"><i class="bi bi-arrow-left-circle me-2"></i>Volver al sitio</a>
         </li>
 
       </ul>

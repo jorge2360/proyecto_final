@@ -1,36 +1,151 @@
 {% extends "base.html" %}
-
 {% block content %}
-<div class="container mt-4">
-    <h2>Todos los productos</h2>
-    <form class="d-flex" method="get" action="{% url 'productos:buscar' %}">
-                            <input class="form-control me-2" type="search" name="q" placeholder="Buscar producto..." aria-label="Buscar">
-                            <button class="btn btn-outline-light" type="submit">Buscar</button>
-                        </form>
-    <div class="row">
+
+<style>
+/* === ESTILOS PERSONALIZADOS === */
+
+/* Contenedor general */
+.productos-container {
+    margin-top: 3rem;
+}
+
+/* Buscador elegante */
+.buscador-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.buscador-wrapper form {
+    display: flex;
+    width: 100%;
+    max-width: 600px;
+    background-color: #fff;
+    border-radius: 50px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.buscador-wrapper input[type="search"] {
+    border: none;
+    padding: 0.8rem 1.5rem;
+    width: 100%;
+    font-size: 1rem;
+    outline: none;
+}
+
+.buscador-wrapper button {
+    background-color: #343a40;
+    color: white;
+    border: none;
+    padding: 0 1.5rem;
+    transition: 0.3s;
+}
+
+.buscador-wrapper button:hover {
+    background-color: #198754;
+}
+
+/* Tarjetas uniformes */
+.product-card {
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Imagen de producto */
+.product-card img {
+    height: 220px;
+    width: 100%;
+    object-fit: contain;
+    background-color: #f8f9fa;
+    padding: 10px;
+}
+
+/* Contenido de la tarjeta */
+.product-card .card-body {
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-card h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.product-card a {
+    text-decoration: none;
+    color: #0d6efd;
+}
+
+.product-card a:hover {
+    text-decoration: underline;
+}
+
+.product-card p {
+    margin: 5px 0;
+}
+
+/* Etiqueta destacado */
+.badge-destacado {
+    background-color: #198754;
+    color: white;
+    font-size: 0.8rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 8px;
+}
+</style>
+
+<div class="container productos-container">
+
+    <h2 class="text-center mb-4 fw-bold">Todos los productos</h2>
+
+    <!-- Buscador estilizado -->
+    <div class="buscador-wrapper">
+        <form method="get" action="{% url 'productos:buscar' %}">
+            <input type="search" name="q" placeholder="Buscar productos, marcas o categorías..." aria-label="Buscar">
+            <button type="submit"><i class="bi bi-search"></i></button>
+        </form>
+    </div>
+
+    <!-- Grid de productos -->
+    <div class="row g-4">
         {% for producto in productos %}
-            <div class="col-md-3">
-                <div class="card mb-4">
-                    {% if producto.imagen %}
-                        <a href="{% url 'productos:detalle' producto.pk %}">
-                            <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
-                        </a>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex">
+            <div class="card product-card w-100">
+                {% if producto.imagen %}
+                    <a href="{% url 'productos:detalle' producto.pk %}">
+                        <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+                    </a>
+                {% endif %}
+                <div class="card-body">
+                    <h5><a href="{% url 'productos:detalle' producto.pk %}">{{ producto.nombre }}</a></h5>
+                    <p class="fw-bold text-dark mb-1">Q{{ producto.precio }}</p>
+                    <p class="text-muted mb-2">Stock: {{ producto.stock }}</p>
+                    {% if producto.destacado %}
+                        <span class="badge-destacado">Destacado</span>
                     {% endif %}
-                    <div class="card-body">
-                        <h5>
-                            <a href="{% url 'productos:detalle' producto.pk %}">{{ producto.nombre }}</a>
-                        </h5>
-                        <p><strong>Q{{ producto.precio }}</strong></p>
-                        <p>Stock: {{ producto.stock }}</p>
-                        {% if producto.destacado %}
-                            <span class="badge bg-success">Destacado</span>
-                        {% endif %}
-                    </div>
                 </div>
             </div>
+        </div>
         {% empty %}
-            <p>No hay productos disponibles.</p>
+        <p class="text-center text-muted">No hay productos disponibles.</p>
         {% endfor %}
     </div>
 </div>
+
 {% endblock %}
