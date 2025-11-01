@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4 text-center">🛍️ Mis pedidos</h2>
+
+    {% if pedidos %}
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-striped align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col"># Pedido</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Total (Q)</th>
+                        <th scope="col" class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pedido in pedidos %}
+                        <tr>
+                            <td><strong>#{{ pedido.id }}</strong></td>
+                            <td>{{ pedido.fecha_creacion|date:"d/m/Y H:i" }}</td>
+                            <td>
+                                {% if pedido.estado == "pendiente" %}
+                                    <span class="badge bg-warning text-dark">Pendiente</span>
+                                {% elif pedido.estado == "procesando" %}
+                                    <span class="badge bg-info text-dark">Procesando</span>
+                                {% elif pedido.estado == "enviado" %}
+                                    <span class="badge bg-primary">Enviado</span>
+                                {% elif pedido.estado == "entregado" %}
+                                    <span class="badge bg-success">Entregado</span>
+                                {% elif pedido.estado == "cancelado" %}
+                                    <span class="badge bg-danger">Cancelado</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">N/A</span>
+                                {% endif %}
+                            </td>
+                            <td>Q{{ pedido.total|floatformat:2 }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'pedidos:detalle' pedido.id %}" class="btn btn-sm btn-outline-dark">
+                                    <i class="bi bi-eye"></i> Ver detalle
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% else %}
+        <div class="text-center py-5">
+            <img src="{% static 'images/empty_cart.png' %}" alt="Sin pedidos" class="mb-3" style="width:150px; opacity:0.7;">
+            <h5 class="text-muted">Aún no tienes pedidos registrados.</h5>
+            <a href="{% url 'productos:lista' %}" class="btn btn-outline-primary mt-3">
+                <i class="bi bi-shop"></i> Ir a comprar
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

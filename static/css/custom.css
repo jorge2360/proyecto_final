@@ -1,284 +1,195 @@
-/* =========================
-   Ajustes de Navbar y Logo
-   ========================= */
-   .header-area .logo img,
-   .main-nav .logo img,
-   .logo-img {
-       max-height: 80px !important; /* altura controlada */
-       width: auto !important;      /* mantiene proporción */
-       object-fit: contain;
-       display: inline-block;
-       margin-top: 5px;
-   }
-   
-   .main-nav ul.nav li a {
-       padding: 15px 20px;
-       font-size: 15px;
-       font-weight: 500;
-   }
-   
-   /* Navbar fijo arriba */
-   body {
-       padding-top: 100px; /* asegura espacio debajo del navbar */
-   }
-   
-   header.header-area {
-       z-index: 1000;
-       position: fixed;
-       top: 0;
-       left: 0;
-       width: 100%;
-   }
-   
-   /* =========================
-      Banner principal
-      ========================= */
-   .main-banner {
-       padding: 60px 0;
-   }
-   
-   /* Banner izquierdo más grande */
-   .main-banner .left-content .thumb {
-       position: relative;
-       border-radius: 8px;
-       overflow: hidden;
-       height: 600px; /* 👈 altura en escritorio */
-   }
-   
-   .main-banner .left-content .thumb img {
-       width: 100%;
-       height: 100%;
-       object-fit: cover;
-       border-radius: 8px;
-   }
-   
-   .header-text {
-       max-width: 500px;
-       margin: 0 auto;
-       text-align: left;
-   }
-   
-   .header-text h2 {
-       font-size: 36px;
-       font-weight: 700;
-       margin-bottom: 20px;
-   }
-   
-   .header-text p {
-       margin-bottom: 20px;
-   }
-   
-   /* =========================
-      Categorías (banners)
-      ========================= */
-   .thumb {
-       position: relative;
-       overflow: hidden;
-       border-radius: 8px;
-   }
-   
-   .thumb img {
-       width: 100%;
-       height: 300px;       /* altura fija en escritorio */
-       object-fit: cover;   /* asegura proporción sin deformar */
-       display: block;
-       border-radius: 8px;
-   }
-   
-   /* Texto centrado con Flexbox */
-   .thumb .inner-content {
-       position: absolute;
-       top: 50%;
-       left: 50%;
-       transform: translate(-50%, -50%);
-       display: flex;
-       flex-direction: column;
-       justify-content: center;
-       align-items: center;
-       text-align: center;
-       color: #fff;
-       z-index: 2;
-       width: 100%;
-       padding: 0 10px;
-   }
-   
-   .thumb .inner-content h4 {
-       font-size: 22px;
-       font-weight: 700;
-       margin-bottom: 5px;
-       text-align: center;
-   }
-   
-   .thumb .inner-content span {
-       font-size: 14px;
-       margin-top: 5px;
-       margin-bottom: 10px;
-       color: #f1f1f1;
-       text-align: center;
-   }
-   
-   /* Hover oscuro */
-   .thumb .hover-content {
-       position: absolute;
-       top: 0;
-       left: 0;
-       width: 100%;
-       height: 100%;
-       background: rgba(0,0,0,0.7);
-       color: #fff;
-       opacity: 0;
-       transition: all 0.3s ease-in-out;
-       display: flex;
-       justify-content: center;
-       align-items: center;
-       text-align: center;
-       padding: 15px;
-   }
-   
-   .thumb:hover .hover-content {
-       opacity: 1;
-   }
-   
-   /* Botón dentro de las categorías */
-   .thumb .main-border-button a {
-       background-color: #2a2a2a;
-       color: #fff;
-       padding: 10px 20px;
-       border-radius: 25px;
-       text-decoration: none;
-       transition: all 0.3s ease;
-   }
-   
-   .thumb .main-border-button a:hover {
-       background-color: #43409c;
-   }
-   
-   /* =========================
-      Espaciado entre secciones
-      ========================= */
-   .section {
-       margin-top: 60px;
-       margin-bottom: 60px;
-   }
-   
-   /* =========================
-      Carrusel de productos
-      ========================= */
-   .owl-men-item .item {
-       margin: 10px;
-   }
-   
-   .owl-men-item .thumb img {
-       border-radius: 6px;
-       transition: transform 0.3s;
-   }
-   
-   .owl-men-item .thumb img:hover {
-       transform: scale(1.05);
-   }
-   
-   /* =========================
-      Animaciones en categorías
-      ========================= */
-   .item img {
-       transition: transform 0.3s ease;
-   }
-   
-   .item img:hover {
-       transform: scale(1.05);
-   }
-   
-   /* =========================
-      Footer
-      ========================= */
-   footer {
-       background: #222;
-       color: #ddd;
-       padding: 20px 0;
-       text-align: center;
-   }
-   
-   footer p {
-       margin: 0;
-       font-size: 14px;
-   }
-   
-   /* =========================
-      FIX: Centrar textos categorías
-      ========================= */
-   .right-content .right-first-image .thumb,
-   .left-content .thumb {
-     position: relative;
-   }
-   
-   .right-content .right-first-image .thumb .inner-content {
-     position: absolute !important;
-     top: 50% !important;
-     left: 50% !important;
-     transform: translate(-50%, -50%) !important;
-     display: flex !important;
-     flex-direction: column !important;
-     justify-content: center !important;
-     align-items: center !important;
-     text-align: center !important;
-     z-index: 2 !important;
-     width: 100% !important;
-     padding: 0 10px !important;
-   }
-   
-   .right-content .right-first-image .thumb .inner-content h4,
-   .right-content .right-first-image .thumb .inner-content span {
-     margin: 0 auto !important;
-     text-align: center !important;
-   }
-   
-   .right-content .right-first-image .thumb:hover .inner-content {
-       opacity: 0 !important;
-       transition: opacity 0.3s ease-in-out;
-   }
-   
-   .right-content .right-first-image .thumb .hover-content {
-       opacity: 0;
-       transition: opacity 0.3s ease-in-out;
-   }
-   
-   .right-content .right-first-image .thumb:hover .hover-content {
-       opacity: 1;
-   }
-   
-   /* =========================
-      Responsive Design
-      ========================= */
-   
-   /* Tablets */
-   @media (max-width: 992px) {
-       .main-banner .left-content .thumb {
-           height: 400px; /* banner izquierdo */
-       }
-       .thumb img {
-           height: 220px; /* categorías */
-       }
-       .thumb .inner-content h4 {
-           font-size: 20px;
-       }
-       .thumb .inner-content span {
-           font-size: 13px;
-       }
-   }
-   
-   /* Móviles */
-   @media (max-width: 576px) {
-       .main-banner .left-content .thumb {
-           height: 250px; /* banner izquierdo */
-       }
-       .thumb img {
-           height: 180px; /* categorías */
-       }
-       .thumb .inner-content h4 {
-           font-size: 18px;
-       }
-       .thumb .inner-content span {
-           font-size: 12px;
-       }
-   }
-   
+/* ==========================================
+   NAVBAR LIMPIO, CENTRADO Y FUNCIONAL
+   ========================================== */
+
+header.header-area {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1050;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+
+header .container {
+  height: 90px;
+}
+
+.logo-img {
+  height: 65px;
+  object-fit: contain;
+}
+
+/* MENÚ PRINCIPAL */
+.main-nav .nav {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav .nav li {
+  position: relative;
+}
+
+.main-nav .nav li a {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  color: #222;
+  text-decoration: none;
+  padding: 10px 15px;
+  transition: color 0.2s ease;
+}
+
+.main-nav .nav li a:hover {
+  color: #6c63ff;
+}
+
+/* ICONOS */
+.main-nav .nav li a i {
+  font-size: 1.1rem;
+  margin-right: 5px;
+  position: relative;
+  top: 1px;
+}
+
+/* DROPDOWN BASE */
+.dropdown-menu {
+  display: block;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  min-width: 200px;
+  padding: 8px 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.25s ease;
+  z-index: 9999;
+}
+
+/* Mostrar con hover */
+.nav-item:hover > .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Ítems dentro del menú */
+.dropdown-menu li a {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  color: #333;
+  font-size: 15px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #f7f7f7;
+  color: #6c63ff;
+}
+
+/* Alineación derecha del menú de usuario */
+.dropdown-menu-end {
+  right: 0;
+  left: auto;
+}
+
+/* Permite clic dentro del menú */
+.dropdown-menu {
+  pointer-events: auto;
+}
+
+/* Animación */
+@keyframes dropdownFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.nav-item:hover > .dropdown-menu {
+  animation: dropdownFade 0.25s ease forwards;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  header .container {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding: 15px 0;
+  }
+
+  .main-nav .nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .dropdown-menu {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+  }
+}
+/* =============================
+   FIX FINAL: Carrito desalineado
+   ============================= */
+
+/* Asegura que todos los elementos del navbar estén en una sola línea */
+.header-area .container,
+.main-nav {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: nowrap !important; /* Evita que el carrito salte de línea */
+  white-space: nowrap !important; /* Mantiene los textos en una sola línea */
+}
+
+/* Ajusta los elementos del menú principal */
+.main-nav .nav {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 25px !important;
+  flex-wrap: nowrap !important; /* Nada se rompe en 2 líneas */
+}
+
+/* Corrige los <li> que pueden expandirse */
+.main-nav .nav li {
+  flex: 0 0 auto !important;
+  white-space: nowrap !important;
+}
+
+/* Corrige el botón del carrito para que quede alineado */
+.main-nav .nav li a {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 0 10px !important;
+  height: 90px !important; /* misma altura del header */
+  color: #222 !important;
+  text-decoration: none !important;
+}
+
+/* Alinea los íconos verticalmente */
+.main-nav .nav li a i {
+  position: relative !important;
+  top: 1px !important;
+}
