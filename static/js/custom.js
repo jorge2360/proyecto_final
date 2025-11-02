@@ -39,21 +39,25 @@
 	  }
 	});
   
-	// ===============================
-	// Cambiar color de header al hacer scroll
-	// ===============================
+	// === Color dinámico del header según el scroll ===
+	// === Header color fix para páginas con y sin banner ===
 	$(window).scroll(function () {
-	  var scroll = $(window).scrollTop();
-	  var box = $("#top").height();
-	  var header = $("header").height();
-  
-	  if (scroll >= box - header) {
+	var scroll = $(window).scrollTop();
+	var topSection = $("#top");
+
+	if (topSection.length) {
+		var box = topSection.height();
+		var header = $("header").height();
+
+		if (scroll >= box - header) {
 		$("header").addClass("background-header");
-	  } else {
+		} else {
 		$("header").removeClass("background-header");
-	  }
-	});
-  
+		}
+	} else {
+		$("header").addClass("background-header");
+	}
+	});  
 	// ===============================
 	// Menú responsive
 	// ===============================
@@ -124,3 +128,37 @@
 	});
   
 })(window.jQuery);
+// === BUSCADOR GLOBAL AJAX (navbar) ===
+document.addEventListener("DOMContentLoaded", function () {
+  const searchInput = document.getElementById("navbarSearch");
+  const resultsDiv = document.getElementById("navbarSearchResults");
+  let searchTimer;
+
+  if (!searchInput) return;
+
+  searchInput.addEventListener("input", function () {
+    clearTimeout(searchTimer);
+    const query = this.value.trim();
+
+    if (query.length < 2) {
+      resultsDiv.style.display = "none";
+      return;
+    }
+
+    searchTimer = setTimeout(() => {
+      fetch(`/productos/buscar-live/?q=${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(data => {
+          resultsDiv.innerHTML = data.html;
+          resultsDiv.style.display = "block";
+        });
+    }, 250);
+  });
+
+  // Ocultar resultados al hacer clic fuera
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".search-bar")) {
+      resultsDiv.style.display = "none";
+    }
+  });
+});

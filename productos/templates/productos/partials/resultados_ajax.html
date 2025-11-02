@@ -1,0 +1,11 @@
+{% for producto in productos %}
+<div class="product-card">
+  <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+  <div class="info">
+    <a href="{% url 'productos:detalle' producto.pk %}">{{ producto.nombre }}</a>
+    <p class="text-muted mb-0">Q{{ producto.precio }}</p>
+  </div>
+</div>
+{% empty %}
+<p class="text-center text-muted py-2 mb-0">No hay resultados.</p>
+{% endfor %}

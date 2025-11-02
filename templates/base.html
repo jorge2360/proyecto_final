@@ -20,7 +20,9 @@
     <meta name="keywords" content="moda, ropa, tienda, online, accesorios, Guatemala">
 </head>
 
-<body>
+<body 
+class="{% if request.resolver_match.url_name == 'home' %}home-page{% else %}internal-page{% endif %}">
+
 
     <!-- ***** Preloader ***** -->
     <div id="preloader">
@@ -39,6 +41,15 @@
 
         <!-- MENÚ PRINCIPAL -->
         <nav class="main-nav">
+          <!-- BUSCADOR GLOBAL -->
+          <li class="nav-item d-none d-md-block ms-3">
+            <div class="search-bar position-relative">
+              <input type="search" id="navbarSearch" class="form-control search-input" placeholder="Buscar productos...">
+              <i class="bi bi-search search-icon"></i>
+              <div id="navbarSearchResults" class="search-results shadow"></div>
+            </div>
+          </li>
+
           <ul class="nav align-items-center">
             <li><a href="{% url 'home' %}">Inicio</a></li>
             <li><a href="{% url 'productos:lista' %}">Productos</a></li>
