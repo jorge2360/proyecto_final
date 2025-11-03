@@ -75,7 +75,7 @@ import os
 
 DATABASES = {
     'default': dj_database_url.parse(
-        'mysql://root:IkUhmgnDlWZvBEFcaTakSDIVyqMZoZAY@shortline.proxy.rlwy.net:12276/railway',
+        'mysql://root:IkUhmgnDlWZvBEFcaTakSDIVyqMZoZAY@shortline.proxy.rlwy.net:12276/offtherack_db',
         engine='django.db.backends.mysql',
         conn_max_age=600,
         ssl_require=False
