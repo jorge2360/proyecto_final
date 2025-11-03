@@ -75,13 +75,10 @@ import os
 
 DATABASES = {
     'default': dj_database_url.parse(
-        os.environ.get(
-            'DATABASE_URL',
-            'mysql://root:IkUhmgnDlWZvBEFcaTakSDIVyqMZoZAY@shortline.proxy.rlwy.net:12276/railway'
-        ),
+        'mysql://root:IkUhmgnDlWZvBEFcaTakSDIVyqMZoZAY@shortline.proxy.rlwy.net:12276/railway',
         engine='django.db.backends.mysql',
-        conn_max_age=600, 
-        ssl_require=False,  
+        conn_max_age=600,
+        ssl_require=False
     )
 }
 
