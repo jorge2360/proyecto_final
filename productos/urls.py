@@ -8,5 +8,5 @@ urlpatterns = [
     path("<int:pk>/", views.detalle_producto, name="detalle"),
     path("categoria/<str:nombre>/", views.productos_por_categoria, name="categoria"),
     path("buscar/", views.buscar_producto, name="buscar"),
-    path('buscar-live/', views.buscar_live, name='buscar_live'),
+    path("buscar-ajax/", views.buscar_ajax, name="buscar_ajax"),
 ]

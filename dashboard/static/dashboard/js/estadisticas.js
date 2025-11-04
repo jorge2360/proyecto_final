@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Obtener los datos desde el bloque JSON del template
   const chartDataElement = document.getElementById("chartData");
   if (!chartDataElement) return;
 

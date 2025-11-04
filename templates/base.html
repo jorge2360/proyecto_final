@@ -1,130 +1,155 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Off The Rack</title>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Off The Rack</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
-    <link rel="stylesheet" href="{% static 'css/templatemo-hexashop.css' %}">
-    <link rel="stylesheet" href="{% static 'css/owl-carousel.css' %}">
-    <link rel="stylesheet" href="{% static 'css/lightbox.css' %}">
-    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-
-    <link rel="icon" type="image/png" href="{% static 'images/favicon.jpg' %}">
-    <meta name="description" content="OffTheRack - Tienda de moda en línea para mujeres, hombres y niños.">
-    <meta name="keywords" content="moda, ropa, tienda, online, accesorios, Guatemala">
+  <!-- ===== CSS ===== -->
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
+  <link rel="stylesheet" href="{% static 'css/templatemo-hexashop.css' %}">
+  <link rel="stylesheet" href="{% static 'css/owl-carousel.css' %}">
+  <link rel="stylesheet" href="{% static 'css/lightbox.css' %}">
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="{% static 'images/favicon.jpg' %}">
 </head>
 
-<body 
-class="{% if request.resolver_match.url_name == 'home' %}home-page{% else %}internal-page{% endif %}">
+<body>
+<!-- ============================
+     NAVBAR PRINCIPAL MODERNO
+============================ -->
+<nav class="navbar navbar-expand-lg bg-white sticky-top custom-navbar">
+  <div class="container d-flex align-items-center justify-content-between py-2">
 
-
-    <!-- ***** Preloader ***** -->
-    <div id="preloader">
-        <div class="jumper"><div></div><div></div><div></div></div>
-    </div>
-
-    <!-- ============================
-         HEADER PRINCIPAL
-    ============================ -->
-    <header class="header-area">
-      <div class="container d-flex align-items-center justify-content-between">
-        <!-- LOGO -->
-        <a href="{% url 'home' %}" class="logo d-flex align-items-center">
-          <img src="{% static 'images/offtherack_logo.jpg' %}" alt="OffTheRack Logo" class="logo-img">
-        </a>
-
-        <!-- MENÚ PRINCIPAL -->
-        <nav class="main-nav">
-          <!-- BUSCADOR GLOBAL -->
-          <li class="nav-item d-none d-md-block ms-3">
-            <div class="search-bar position-relative">
-              <input type="search" id="navbarSearch" class="form-control search-input" placeholder="Buscar productos...">
-              <i class="bi bi-search search-icon"></i>
-              <div id="navbarSearchResults" class="search-results shadow"></div>
-            </div>
-          </li>
-
-          <ul class="nav align-items-center">
-            <li><a href="{% url 'home' %}">Inicio</a></li>
-            <li><a href="{% url 'productos:lista' %}">Productos</a></li>
-
-            <!-- CATEGORÍAS -->
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button">Categorías</a>
-              <ul class="dropdown-menu">
-                <li><a href="{% url 'productos:categoria' 'Mujeres' %}">Mujeres</a></li>
-                <li><a href="{% url 'productos:categoria' 'Hombres' %}">Hombres</a></li>
-                <li><a href="{% url 'productos:categoria' 'Niños' %}">Niños</a></li>
-                <li><a href="{% url 'productos:categoria' 'Accesorios' %}">Accesorios</a></li>
-              </ul>
-            </li>
-
-            {% if user.is_authenticated %}
-            <!-- USUARIO LOGUEADO -->
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button">
-                <i class="bi bi-person-circle me-1"></i>{{ user.username|title }}
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end">
-                <li><a href="{% url 'usuarios:perfil' %}"><i class="bi bi-person-lines-fill me-1"></i>Mi perfil</a></li>
-                <li><a href="{% url 'pedidos:lista' %}"><i class="bi bi-bag-check me-1"></i>Mis pedidos</a></li>
-                <li class="dropdown-divider"></li>
-                <li><a href="{% url 'usuarios:logout' %}" class="text-danger"><i class="bi bi-box-arrow-right me-1"></i>Cerrar sesión</a></li>
-              </ul>
-            </li>
-            {% else %}
-            <!-- USUARIO SIN INICIAR SESIÓN -->
-            <li><a href="{% url 'usuarios:login' %}"><i class="bi bi-box-arrow-in-right me-1"></i>Iniciar sesión</a></li>
-            <li><a href="{% url 'usuarios:registro_cliente' %}"><i class="bi bi-person-plus me-1"></i>Registrarse</a></li>
-            {% endif %}
-
-            <!-- CARRITO -->
-            <li><a href="{% url 'carrito:detalle' %}"><i class="fa fa-shopping-cart me-1"></i>Carrito</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-
-    <!-- ============================
-         CONTENIDO PRINCIPAL
-    ============================ -->
-    <main>
-        {% block content %}{% endblock %}
-    </main>
-
-    <!-- ***** BOTÓN FLOTANTE CARRITO (MÓVIL) ***** -->
-    <a href="{% url 'carrito:detalle' %}" class="floating-cart d-md-none">
-        <i class="bi bi-cart4"></i>
+    <!-- LOGO -->
+    <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+      <img src="{% static 'images/offtherack_logo.jpg' %}" alt="Off The Rack" class="logo-img">
     </a>
 
-    <!-- ============================
-         FOOTER
-    ============================ -->
-    {% include 'partials/footer.html' %}
+    <!-- BUSCADOR -->
+    <form id="searchForm" class="d-flex align-items-center position-relative search-form" role="search" autocomplete="off">
+      <input id="navbarSearch" class="form-control search-input" type="search" placeholder="Buscar productos..." aria-label="Buscar">
+      <i class="bi bi-search search-icon"></i>
+      <div id="searchResults" class="search-results"></div>
+    </form>
 
-    <!-- ============================
-         SCRIPTS
-    ============================ -->
-    <script src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
-    <script src="{% static 'js/popper.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/owl-carousel.js' %}"></script>
-    <script src="{% static 'js/accordions.js' %}"></script>
-    <script src="{% static 'js/datepicker.js' %}"></script>
-    <script src="{% static 'js/scrollreveal.min.js' %}"></script>
-    <script src="{% static 'js/waypoints.min.js' %}"></script>
-    <script src="{% static 'js/jquery.counterup.min.js' %}"></script>
-    <script src="{% static 'js/imgfix.min.js' %}"></script>
-    <script src="{% static 'js/slick.js' %}"></script>
-    <script src="{% static 'js/lightbox.js' %}"></script>
-    <script src="{% static 'js/isotope.js' %}"></script>
-    <script src="{% static 'js/custom.js' %}"></script>
+    <!-- BOTÓN MENÚ MÓVIL -->
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+      <i class="bi bi-list fs-3"></i>
+    </button>
 
+    <!-- MENÚ PRINCIPAL -->
+    <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
+      <ul class="navbar-nav align-items-center gap-lg-3 text-center mt-2 mt-lg-0">
+
+        <li class="nav-item"><a class="nav-link fw-semibold" href="{% url 'home' %}">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link fw-semibold" href="{% url 'productos:lista' %}">Productos</a></li>
+
+        <!-- CATEGORÍAS -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fw-semibold" href="#" id="categoriasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Categorías
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="categoriasDropdown">
+            <li><a class="dropdown-item" href="{% url 'productos:categoria' 'Mujeres' %}">Mujeres</a></li>
+            <li><a class="dropdown-item" href="{% url 'productos:categoria' 'Hombres' %}">Hombres</a></li>
+            <li><a class="dropdown-item" href="{% url 'productos:categoria' 'Niños' %}">Niños</a></li>
+            <li><a class="dropdown-item" href="{% url 'productos:categoria' 'Accesorios' %}">Accesorios</a></li>
+          </ul>
+        </li>
+
+        {% if user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle fw-semibold" href="#" data-bs-toggle="dropdown">
+              <i class="bi bi-person-circle me-1"></i>{{ user.username|title }}
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'usuarios:perfil' %}">Mi perfil</a></li>
+              <li><a class="dropdown-item" href="{% url 'pedidos:lista' %}">Mis pedidos</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="{% url 'usuarios:logout' %}">Cerrar sesión</a></li>
+            </ul>
+          </li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link fw-semibold" href="{% url 'usuarios:login' %}"><i class="bi bi-box-arrow-in-right me-1"></i>Iniciar Sesión</a></li>
+          <li class="nav-item"><a class="nav-link fw-semibold" href="{% url 'usuarios:registro_cliente' %}"><i class="bi bi-person-plus me-1"></i>Registrarse</a></li>
+        {% endif %}
+
+        <!-- CARRITO -->
+        <li class="nav-item">
+          <a href="{% url 'carrito:detalle' %}" class="btn btn-outline-success d-flex align-items-center gap-2">
+            <i class="bi bi-cart3"></i> <span>Carrito</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+<!-- CONTENIDO -->
+<main class="mt-3">
+  {% block content %}{% endblock %}
+</main>
+
+{% include 'partials/footer.html' %}
+
+<!-- ============================
+     SCRIPTS
+============================ -->
+<script src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+<!-- ===== BUSCADOR AJAX ===== -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const activarBuscador = (inputId, resultsId) => {
+    const input = document.getElementById(inputId);
+    const results = document.getElementById(resultsId);
+    if (!input || !results) return;
+
+    input.addEventListener("input", async (e) => {
+      const q = e.target.value.trim();
+      if (q.length < 2) {
+        results.style.display = "none";
+        return;
+      }
+
+      try {
+        const res = await fetch(`{% url 'productos:buscar_ajax' %}?q=${encodeURIComponent(q)}`);
+        const data = await res.json();
+
+        if (Array.isArray(data.results) && data.results.length > 0) {
+          results.innerHTML = data.results.map(p => `
+            <a href="${p.url}" class="search-item">
+              <img src="${p.imagen || '/static/images/no_image.png'}" alt="${p.nombre}">
+              <div><strong>${p.nombre}</strong><span>Q${p.precio}</span></div>
+            </a>
+          `).join("");
+          results.style.display = "block";
+        } else {
+          results.innerHTML = '<div class="no-results">Sin resultados</div>';
+          results.style.display = "block";
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!results.contains(e.target) && e.target !== input) {
+        results.style.display = "none";
+      }
+    });
+  };
+
+  activarBuscador("navbarSearch", "searchResults");
+  activarBuscador("mobileSearch", "mobileSearchResults");
+});
+</script>
 </body>
 </html>

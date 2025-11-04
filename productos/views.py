@@ -2,6 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from .models import Producto, Categoria
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from django.http import JsonResponse
+from django.urls import reverse
+from .models import Producto
+
 
 # Página de inicio - categorías y destacados
 def home(request):
@@ -48,9 +52,19 @@ def buscar_producto(request):
     resultados = Producto.objects.filter(nombre__icontains=query) if query else []
     return render(request, "productos/buscar.html", {"resultados": resultados, "query": query})
 
-def buscar_live(request):
-    query = request.GET.get('q', '')
-    productos = Producto.objects.filter(nombre__icontains=query)[:8] if query else []
-    
-    html = render_to_string('productos/partials/resultados_ajax.html', {'productos': productos})
-    return JsonResponse({'html': html})
+def buscar_ajax(request):
+    q = request.GET.get("q", "").strip()
+    results = []
+    if q:
+        qs = (Producto.objects
+              .filter(nombre__icontains=q)[:10]
+              .values("id", "nombre", "precio", "imagen"))
+        for p in qs:
+            results.append({
+                "id": p["id"],
+                "nombre": p["nombre"],
+                "precio": str(p["precio"]),
+                "imagen": getattr(getattr(Producto.objects.get(id=p["id"]), "imagen"), "url", ""),
+                "url": reverse("productos:detalle", args=[p["id"]]),
+            })
+    return JsonResponse({"results": results})

@@ -141,14 +141,12 @@ def checkout(request):
             return redirect("carrito:checkout")
 
         try:
-            # ✅ Dirección de envío asegurada (nunca NULL)
             direccion_envio = (
                 request.POST.get("direccion_envio")
                 or getattr(request.user, "direccion", None)
                 or "Dirección no especificada"
             )
 
-            # 1️⃣ Crear pedido
             pedido = Pedido.objects.create(
                 usuario=request.user,
                 direccion_envio=direccion_envio,
@@ -156,7 +154,6 @@ def checkout(request):
                 estado="pendiente"
             )
 
-            # 2️⃣ Crear ítems y descontar stock
             for item in items:
                 producto = item.producto
 
@@ -175,7 +172,6 @@ def checkout(request):
                     precio=producto.precio,
                 )
 
-            # 3️⃣ Registrar pago
             Pago.objects.create(
                 pedido=pedido,
                 usuario=request.user,
@@ -183,8 +179,6 @@ def checkout(request):
                 monto=total,
                 confirmado=False,
             )
-
-            # 4️⃣ Vaciar carrito
             carrito.items.all().delete()
 
             messages.success(request, f"¡Pedido #{pedido.id} creado correctamente!")
@@ -204,7 +198,7 @@ def checkout(request):
 @login_required
 def confirmacion(request, pedido_id):
     """Pantalla de confirmación de compra"""
-    from pedidos.models import Pedido  # evitar import circular
+    from pedidos.models import Pedido  
     pedido = get_object_or_404(Pedido, id=pedido_id, usuario=request.user)
 
     return render(request, "carrito/confirmacion.html", {"pedido": pedido})

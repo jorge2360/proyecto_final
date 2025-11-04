@@ -29,7 +29,6 @@ class ClienteRegistroForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Personalizamos los campos de contraseña
         self.fields["password1"].widget.attrs.update({
             "class": "form-control",
             "placeholder": "Cree una contraseña segura"
@@ -38,7 +37,6 @@ class ClienteRegistroForm(UserCreationForm):
             "class": "form-control",
             "placeholder": "Confirme su contraseña"
         })
-        # Mensajes más claros
         self.fields["password1"].help_text = "Use al menos 8 caracteres, incluyendo letras y números."
         self.fields["password2"].help_text = "Repita la contraseña para confirmarla."
 

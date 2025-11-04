@@ -87,7 +87,7 @@ DATABASES = {
 #  CONFIGURACIONES VARIAS
 # =====================
 
-AUTH_USER_MODEL = "usuarios.Usuario"  # Si tienes modelo personalizado
+AUTH_USER_MODEL = "usuarios.Usuario"  
 
 LANGUAGE_CODE = "es"
 TIME_ZONE = "America/Guatemala"
@@ -106,3 +106,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # HTTPS y proxy Render
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+LOGIN_URL = 'usuarios:login'             # redirige aquí si no está loggeado
+LOGIN_REDIRECT_URL = 'home'              # después de iniciar sesión
+LOGOUT_REDIRECT_URL = 'home'  

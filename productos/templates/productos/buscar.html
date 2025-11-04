@@ -1,21 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container mt-4">
-  <h2>Resultados para "{{ query }}"</h2>
-  <div class="row">
+<div class="container mt-5">
+  <h2 class="text-center mb-4 fw-bold">Resultados para "{{ query }}"</h2>
+
+  <div class="row g-4">
     {% for producto in resultados %}
-      <div class="col-md-3 mb-4">
-        <div class="card">
-          <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
-          <div class="card-body text-center">
-            <h5>{{ producto.nombre }}</h5>
-            <p>Q{{ producto.precio }}</p>
-            <a href="{% url 'productos:detalle' producto.id %}" class="btn btn-primary">Ver más</a>
-          </div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex">
+      <div class="card product-card w-100">
+        {% if producto.imagen %}
+          <a href="{% url 'productos:detalle' producto.pk %}">
+            <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+          </a>
+        {% endif %}
+        <div class="card-body text-center">
+          <h5>
+            <a href="{% url 'productos:detalle' producto.pk %}" class="text-dark text-decoration-none">
+              {{ producto.nombre }}
+            </a>
+          </h5>
+          <p class="fw-bold text-dark mb-1">Q{{ producto.precio }}</p>
+          {% if producto.destacado %}
+            <span class="badge-destacado">Destacado</span>
+          {% endif %}
         </div>
       </div>
+    </div>
     {% empty %}
-      <p>No se encontraron productos.</p>
+      <p class="text-center text-muted">No se encontraron productos.</p>
     {% endfor %}
   </div>
 </div>

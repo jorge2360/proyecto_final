@@ -5,15 +5,57 @@
 
   <h2 class="text-center mb-4 fw-bold">Todos los productos</h2>
 
-  <!-- Buscador -->
-  <div class="buscador-wrapper mb-5">
-    <form method="get" action="{% url 'productos:buscar' %}" id="buscadorForm">
-      <input type="search" name="q" id="buscadorInput"
-        placeholder="Buscar productos, marcas o categorías..." aria-label="Buscar">
-      <button type="submit"><i class="bi bi-search"></i></button>
+  <!-- Buscador estilizado -->
+  <div class="d-flex justify-content-center mb-5">
+    <form method="get" action="{% url 'productos:buscar' %}" id="buscadorForm" class="search-bar d-flex align-items-center shadow-sm">
+      <input 
+        type="search" 
+        name="q" 
+        id="buscadorInput"
+        class="form-control flex-grow-1 search-field"
+        placeholder="Buscar productos, marcas o categorías..."
+        aria-label="Buscar"
+        value="{{ request.GET.q|default:'' }}"
+      >
+      <button type="submit" class="btn btn-dark rounded-end search-btn">
+        <i class="bi bi-search"></i>
+      </button>
     </form>
-    <div id="buscadorResultados"></div>
   </div>
+
+  <style>
+  /* === Buscador Moderno === */
+  .search-bar {
+    border-radius: 50px;
+    overflow: hidden;
+    max-width: 700px;
+    width: 100%;
+    background-color: #fff;
+    transition: all 0.2s ease;
+  }
+
+  .search-field {
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 50px 0 0 50px;
+  }
+
+  .search-field:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .search-btn {
+    border-radius: 0 50px 50px 0;
+    padding: 0.6rem 1.2rem;
+    font-size: 1.2rem;
+  }
+
+  .search-bar:hover {
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  </style>
 
   <!-- Grid de productos -->
   <div class="row g-4" id="listaProductos">
@@ -41,35 +83,49 @@
   </div>
 </div>
 
+{% block extra_scripts %}
 <script>
-const input = document.getElementById('buscadorInput');
-const resultados = document.getElementById('buscadorResultados');
-let timer;
+document.addEventListener("DOMContentLoaded", () => {
+  const buscador = document.getElementById("buscadorInput");
+  const resultados = document.getElementById("buscadorResultados");
+  if (!buscador || !resultados) return;
 
-input.addEventListener('input', function() {
-  clearTimeout(timer);
-  const query = this.value.trim();
+  let timer;
+  buscador.addEventListener("input", () => {
+    clearTimeout(timer);
+    const q = buscador.value.trim();
+    if (q.length < 2) {
+      resultados.style.display = "none";
+      return;
+    }
 
-  if (query.length < 2) {
-    resultados.style.display = 'none';
-    return;
-  }
+    timer = setTimeout(() => {
+      fetch(`{% url 'productos:buscar_ajax' %}?q=${encodeURIComponent(q)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data.results) && data.results.length > 0) {
+            resultados.innerHTML = data.results.map(p => `
+              <a href="${p.url}" class="search-item">
+                <img src="${p.imagen || '/static/images/no_image.png'}" alt="${p.nombre}">
+                <div><strong>${p.nombre}</strong><span>Q${p.precio}</span></div>
+              </a>
+            `).join("");
+            resultados.style.display = "block";
+          } else {
+            resultados.innerHTML = '<div class="no-results">Sin resultados</div>';
+            resultados.style.display = "block";
+          }
+        })
+        .catch(console.error);
+    }, 250);
+  });
 
-  timer = setTimeout(() => {
-    fetch(`/productos/buscar-live/?q=${query}`)
-      .then(response => response.json())
-      .then(data => {
-        resultados.innerHTML = data.html;
-        resultados.style.display = 'block';
-      });
-  }, 250);
-});
-
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('#buscadorResultados') && !e.target.closest('#buscadorForm')) {
-    resultados.style.display = 'none';
-  }
+  document.addEventListener("click", (e) => {
+    if (!resultados.contains(e.target) && e.target !== buscador)
+      resultados.style.display = "none";
+  });
 });
 </script>
+{% endblock %}
 
 {% endblock %}

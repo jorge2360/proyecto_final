@@ -21,19 +21,16 @@ class PedidoAdmin(admin.ModelAdmin):
     readonly_fields = ('creado', 'actualizado', 'total')
     inlines = [PedidoItemInline]
 
-    # ✅ Muestra el nombre del cliente (o username si no tiene nombre completo)
     def mostrar_cliente(self, obj):
         if obj.usuario.first_name or obj.usuario.last_name:
             return f"{obj.usuario.first_name} {obj.usuario.last_name}".strip()
         return obj.usuario.username
     mostrar_cliente.short_description = "Cliente"
 
-    # ✅ Muestra la fecha con formato legible
     def mostrar_fecha(self, obj):
         return obj.creado.strftime("%d/%m/%Y %H:%M")
     mostrar_fecha.short_description = "Fecha"
 
-    # ✅ Muestra el total con símbolo Q
     def mostrar_total(self, obj):
         return f"Q{obj.total:.2f}"
     mostrar_total.short_description = "Total"
