@@ -1,6 +1,6 @@
-/* =======================================
-   NAVBAR OFF THE RACK — VERSIÓN LIMPIA Y FUNCIONAL
-======================================= */
+/* =====================
+   NAVBAR OFF THE RACK 
+======================== */
 
 /* === CONTENEDOR GENERAL === */
 .custom-navbar {
@@ -275,7 +275,6 @@ body {
 
 /* =======================================
    EFECTO HOVER — CATEGORÍAS DERECHA
-   (Texto y botón aparecen solo al pasar el cursor)
 ======================================= */
 
 .right-first-image {
@@ -391,4 +390,334 @@ body {
 /* ======= ESPACIADO GENERAL ======= */
 .section {
   margin-top: 60px;
+}
+/* =======================================
+   PRODUCTOS — TARJETAS, IMÁGENES Y CARRUSEL
+======================================= */
+
+/* ===== TARJETA GENERAL ===== */
+.product-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* ===== IMÁGENES ===== */
+.product-card img {
+  width: 100%;
+  height: 280px;
+  object-fit: contain;
+  background-color: #fff;
+  padding: 10px;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover img {
+  transform: scale(1.05);
+}
+
+/* ===== INFORMACIÓN ===== */
+.product-card .product-info {
+  padding: 15px;
+}
+
+.product-card .product-info h5 {
+  font-weight: 700;
+  color: #222;
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.product-card .product-info p {
+  margin: 3px 0;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+/* ===== BOTÓN “VER MÁS” ===== */
+.product-card .view-more-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 7px 18px;
+  border: 2px solid #198754;
+  border-radius: 25px;
+  color: #198754;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.product-card .view-more-btn:hover {
+  background: #198754;
+  color: #fff;
+}
+
+/* ===== CONTENEDOR DE PRODUCTOS ===== */
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* ===== CARRUSEL DE PRODUCTOS ===== */
+.carousel-productos .product-card {
+  margin: 10px;
+  flex: 0 0 auto;
+  width: 250px;
+}
+
+/* Asegura altura igualada dentro del carrusel */
+.carousel-productos .product-card img {
+  height: 220px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 767.98px) {
+  .product-card img {
+    height: 200px;
+  }
+
+  .product-card .product-info h5 {
+    font-size: 0.95rem;
+  }
+
+  .product-card .view-more-btn {
+    font-size: 0.85rem;
+    padding: 6px 16px;
+  }
+
+  .product-list {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 15px;
+    padding: 10px;
+  }
+}
+/* ========================
+   SECCIÓN DESTACADOS 
+===================== */
+
+.destacados-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Cada tarjeta tiene tamaño uniforme */
+.destacados-section .product-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  overflow: hidden;
+  width: 260px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.destacados-section .product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Imagen con altura fija y centrada */
+.destacados-section .product-card img {
+  width: 100%;
+  height: 230px;
+  object-fit: contain;
+  background-color: #fff;
+  padding: 10px;
+  transition: transform 0.3s ease;
+}
+
+.destacados-section .product-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Texto y precio */
+.destacados-section .product-card h5 {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #222;
+  margin: 10px 0 5px;
+}
+
+.destacados-section .product-card p {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
+}
+
+/* Botón “Ver más” */
+.destacados-section .product-card a {
+  display: inline-block;
+  margin: 10px auto 15px;
+  padding: 6px 18px;
+  border-radius: 25px;
+  border: 2px solid #198754;
+  color: #198754;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.destacados-section .product-card a:hover {
+  background: #198754;
+  color: #fff;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 767.98px) {
+  .destacados-section .product-card {
+    width: 160px;
+    height: 320px;
+  }
+  .destacados-section .product-card img {
+    height: 180px;
+  }
+  .destacados-section .product-card h5 {
+    font-size: 0.9rem;
+  }
+}
+/* ===============================
+   CARRUSEL DE PRODUCTOS 
+================================== */
+
+/* Ajuste general del carrusel */
+.destacados h2 {
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #222;
+  text-align: left;
+}
+
+/* Contenedor de cada tarjeta dentro del carrusel */
+.owl-carousel .product-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  overflow: hidden;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.owl-carousel .product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+/* Imagen del producto */
+.owl-carousel .product-card img {
+  width: 100%;
+  height: 230px;
+  object-fit: contain;
+  background: #fff;
+  padding: 10px;
+  transition: transform 0.3s ease;
+}
+
+.owl-carousel .product-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Información */
+.product-info {
+  text-align: center;
+  padding: 10px 10px 20px;
+}
+
+.product-info h5 {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.product-info p {
+  color: #444;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+/* Botón “Ver más” */
+.view-more-btn {
+  display: inline-block;
+  border: 2px solid #198754;
+  color: #198754;
+  border-radius: 25px;
+  padding: 6px 18px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.view-more-btn:hover {
+  background-color: #198754;
+  color: #fff;
+}
+
+/* Flechas personalizadas */
+.custom-prev, .custom-next {
+  font-size: 1.8rem;
+  color: #198754;
+  background: #fff;
+  border-radius: 50%;
+  padding: 8px 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.custom-prev:hover, .custom-next:hover {
+  background: #198754;
+  color: #fff;
+}
+
+.owl-nav {
+  position: absolute;
+  top: 40%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.owl-nav button {
+  pointer-events: all;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Responsivo */
+@media (max-width: 767.98px) {
+  .owl-carousel .product-card {
+    height: 320px;
+  }
+  .owl-carousel .product-card img {
+    height: 180px;
+  }
+}
+/* === Evitar que Owl oculte los carruseles si JS falla === */
+.owl-carousel {
+  display: block !important;
+  visibility: visible !important;
 }

@@ -21,7 +21,7 @@
 	});
 
 	// ===============================
-	// Carruseles de productos destacados (NUEVO)
+	// Carruseles de productos destacados
 	// ===============================
 	$(".men-item-carousel, .women-item-carousel, .kids-item-carousel, .accessories-item-carousel").owlCarousel({
 	  items: 4,

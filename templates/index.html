@@ -2,249 +2,205 @@
 {% load static %}
 
 {% block content %}
-
-<!-- ***** Main Banner Area Start ***** -->
+<!-- ***** Main Banner Area ***** -->
 <div class="main-banner" id="top">
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Banner Izquierda -->
-            <div class="col-lg-6">
-                <div class="left-content">
-                    <div class="thumb">
-                        <div class="inner-content text-center">
-                            <h4>We are Off The Rack</h4>
-                            <span>Tu tienda de moda en línea</span>
-                            <div class="main-border-button">
-                                <a href="{% url 'productos:lista' %}">Explorar Ahora</a>
-                            </div>
-                        </div>
-                        <img src="{% static 'images/Banner-Off-The-Rack.jpg' %}" alt="Off The Rack">
-                    </div>
-                </div>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Banner Izquierda -->
+      <div class="col-lg-6">
+        <div class="left-content">
+          <div class="thumb">
+            <div class="inner-content text-center">
+              <h4>We are Off The Rack</h4>
+              <span>Tu tienda de moda en línea</span>
+              <div class="main-border-button">
+                <a href="{% url 'productos:lista' %}">Explorar Ahora</a>
+              </div>
             </div>
-            <!-- Banner Derecha -->
-            <div class="col-lg-6">
-                <div class="right-content">
-                    <div class="row">
-                        <!-- Mujeres -->
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <div class="right-first-image">
-                                <div class="thumb">
-                                    <div class="inner-content text-center">
-                                        <h4>Mujeres</h4>
-                                        <span>Última colección</span>
-                                    </div>
-                                    <div class="hover-content">
-                                        <div class="inner">
-                                            <h4>Mujeres</h4>
-                                            <p>Explora lo más nuevo en moda femenina.</p>
-                                            <div class="main-border-button">
-                                                <a href="{% url 'productos:categoria' 'Mujeres' %}">Explorar</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <img src="{% static 'images/mujeres_cat.jpg' %}" alt="Mujeres">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Hombres -->
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <div class="right-first-image">
-                                <div class="thumb">
-                                    <div class="inner-content text-center">
-                                        <h4>Hombres</h4>
-                                        <span>Estilo único</span>
-                                    </div>
-                                    <div class="hover-content">
-                                        <div class="inner">
-                                            <h4>Hombres</h4>
-                                            <p>Moda masculina moderna y versátil.</p>
-                                            <div class="main-border-button">
-                                                <a href="{% url 'productos:categoria' 'Hombres' %}">Explorar</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <img src="{% static 'images/hombres_cat.jpg' %}" alt="Hombres">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Niños -->
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <div class="right-first-image">
-                                <div class="thumb">
-                                    <div class="inner-content text-center">
-                                        <h4>Niños</h4>
-                                        <span>Moda infantil</span>
-                                    </div>
-                                    <div class="hover-content">
-                                        <div class="inner">
-                                            <h4>Niños</h4>
-                                            <p>Comodidad y estilo para los más pequeños.</p>
-                                            <div class="main-border-button">
-                                                <a href="{% url 'productos:categoria' 'Niños' %}">Explorar</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <img src="{% static 'images/niños_cat.jpg' %}" alt="Niños">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Accesorios -->
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <div class="right-first-image">
-                                <div class="thumb">
-                                    <div class="inner-content text-center">
-                                        <h4>Accesorios</h4>
-                                        <span>Complementa tu look</span>
-                                    </div>
-                                    <div class="hover-content">
-                                        <div class="inner">
-                                            <h4>Accesorios</h4>
-                                            <p>Los detalles que hacen la diferencia.</p>
-                                            <div class="main-border-button">
-                                                <a href="{% url 'productos:categoria' 'Accesorios' %}">Explorar</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <img src="{% static 'images/accesorios_cat.jpg' %}" alt="Accesorios">
-                                </div>
-                            </div>
-                        </div>
-                    </div> <!-- row -->
-                </div> <!-- right-content -->
-            </div> <!-- col-lg-6 -->
-        </div> <!-- row -->
-    </div> <!-- container-fluid -->
+            <img src="{% static 'images/Banner-Off-The-Rack.jpg' %}" alt="Off The Rack">
+          </div>
+        </div>
+      </div>
+
+      <!-- Banner Derecha -->
+      <div class="col-lg-6">
+        <div class="right-content">
+          <div class="row">
+            <!-- Mujeres -->
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="right-first-image">
+                <img src="{% static 'images/mujeres_cat.jpg' %}" alt="Mujeres">
+                <div class="hover-content">
+                  <h4>Mujeres</h4>
+                  <p>Explora lo más nuevo en moda femenina.</p>
+                  <div class="main-border-button">
+                    <a href="{% url 'productos:categoria' 'Mujeres' %}">Explorar</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hombres -->
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="right-first-image">
+                <img src="{% static 'images/hombres_cat.jpg' %}" alt="Hombres">
+                <div class="hover-content">
+                  <h4>Hombres</h4>
+                  <p>Moda masculina moderna y versátil.</p>
+                  <div class="main-border-button">
+                    <a href="{% url 'productos:categoria' 'Hombres' %}">Explorar</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Niños -->
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="right-first-image">
+                <img src="{% static 'images/niños_cat.jpg' %}" alt="Niños">
+                <div class="hover-content">
+                  <h4>Niños</h4>
+                  <p>Comodidad y estilo para los más pequeños.</p>
+                  <div class="main-border-button">
+                    <a href="{% url 'productos:categoria' 'Niños' %}">Explorar</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Accesorios -->
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="right-first-image">
+                <img src="{% static 'images/accesorios_cat.jpg' %}" alt="Accesorios">
+                <div class="hover-content">
+                  <h4>Accesorios</h4>
+                  <p>Los detalles que hacen la diferencia.</p>
+                  <div class="main-border-button">
+                    <a href="{% url 'productos:categoria' 'Accesorios' %}">Explorar</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div> <!-- row -->
+        </div> <!-- right-content -->
+      </div> <!-- col-lg-6 -->
+    </div> <!-- row -->
+  </div> <!-- container-fluid -->
 </div>
 <!-- ***** Main Banner Area End ***** -->
 
-<!-- ***** Productos Destacados ***** -->
-<section class="section" id="mujeres">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6"><h2>Destacados Mujeres</h2></div>
+
+<!-- =======================================
+     SECCIONES DESTACADOS — CON CARRUSEL
+======================================= -->
+
+<section class="section destacados">
+  <div class="container">
+    <h2>Destacados Mujeres</h2>
+    <div class="owl-carousel owl-theme destacados-carousel">
+      {% for producto in destacados_mujeres %}
+      <div class="item">
+        <div class="product-card">
+          <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+          <div class="product-info">
+            <h5>{{ producto.nombre }}</h5>
+            <p>Q{{ producto.precio }}</p>
+            <a href="{% url 'productos:detalle' producto.id %}" class="view-more-btn">Ver más</a>
+          </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="men-item-carousel owl-carousel">
-                    {% for producto in destacados_mujeres %}
-                    <div class="item">
-                        <div class="thumb">
-                            <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
-                            <div class="hover-content">
-                                <div class="inner">
-                                    <h4>{{ producto.nombre }}</h4>
-                                    <p>Q{{ producto.precio }}</p>
-                                    <div class="main-border-button">
-                                        <a href="{% url 'productos:detalle' producto.id %}">Ver más</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <p>No hay productos destacados.</p>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+      </div>
+      {% empty %}
+      <p>No hay productos destacados.</p>
+      {% endfor %}
     </div>
+  </div>
 </section>
 
-<section class="section" id="hombres">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6"><h2>Destacados Hombres</h2></div>
+<section class="section destacados">
+  <div class="container">
+    <h2>Destacados Hombres</h2>
+    <div class="owl-carousel owl-theme destacados-carousel">
+      {% for producto in destacados_hombres %}
+      <div class="item">
+        <div class="product-card">
+          <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+          <div class="product-info">
+            <h5>{{ producto.nombre }}</h5>
+            <p>Q{{ producto.precio }}</p>
+            <a href="{% url 'productos:detalle' producto.id %}" class="view-more-btn">Ver más</a>
+          </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="women-item-carousel owl-carousel">
-                    {% for producto in destacados_hombres %}
-                    <div class="item">
-                        <div class="thumb">
-                            <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
-                            <div class="hover-content">
-                                <div class="inner">
-                                    <h4>{{ producto.nombre }}</h4>
-                                    <p>Q{{ producto.precio }}</p>
-                                    <div class="main-border-button">
-                                        <a href="{% url 'productos:detalle' producto.id %}">Ver más</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <p>No hay productos destacados.</p>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+      </div>
+      {% empty %}
+      <p>No hay productos destacados.</p>
+      {% endfor %}
     </div>
+  </div>
 </section>
 
-<section class="section" id="ninos">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6"><h2>Destacados Niños</h2></div>
+<section class="section destacados">
+  <div class="container">
+    <h2>Destacados Niños</h2>
+    <div class="owl-carousel owl-theme destacados-carousel">
+      {% for producto in destacados_ninos %}
+      <div class="item">
+        <div class="product-card">
+          <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+          <div class="product-info">
+            <h5>{{ producto.nombre }}</h5>
+            <p>Q{{ producto.precio }}</p>
+            <a href="{% url 'productos:detalle' producto.id %}" class="view-more-btn">Ver más</a>
+          </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="kids-item-carousel owl-carousel">
-                    {% for producto in destacados_ninos %}
-                    <div class="item">
-                        <div class="thumb">
-                            <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
-                            <div class="hover-content">
-                                <div class="inner">
-                                    <h4>{{ producto.nombre }}</h4>
-                                    <p>Q{{ producto.precio }}</p>
-                                    <div class="main-border-button">
-                                        <a href="{% url 'productos:detalle' producto.id %}">Ver más</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <p>No hay productos destacados.</p>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+      </div>
+      {% empty %}
+      <p>No hay productos destacados.</p>
+      {% endfor %}
     </div>
+  </div>
 </section>
 
-<section class="section" id="accesorios">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6"><h2>Destacados Accesorios</h2></div>
+<section class="section destacados">
+  <div class="container">
+    <h2>Destacados Accesorios</h2>
+    <div class="owl-carousel owl-theme destacados-carousel">
+      {% for producto in destacados_accesorios %}
+      <div class="item">
+        <div class="product-card">
+          <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+          <div class="product-info">
+            <h5>{{ producto.nombre }}</h5>
+            <p>Q{{ producto.precio }}</p>
+            <a href="{% url 'productos:detalle' producto.id %}" class="view-more-btn">Ver más</a>
+          </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="accessories-item-carousel owl-carousel">
-                    {% for producto in destacados_accesorios %}
-                    <div class="item">
-                        <div class="thumb">
-                            <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
-                            <div class="hover-content">
-                                <div class="inner">
-                                    <h4>{{ producto.nombre }}</h4>
-                                    <p>Q{{ producto.precio }}</p>
-                                    <div class="main-border-button">
-                                        <a href="{% url 'productos:detalle' producto.id %}">Ver más</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <p>No hay productos destacados.</p>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+      </div>
+      {% empty %}
+      <p>No hay productos destacados.</p>
+      {% endfor %}
     </div>
+  </div>
 </section>
+{% endblock %}
 
+{% block extra_js %}
+<script>
+  $(document).ready(function(){
+    $(".destacados-carousel").owlCarousel({
+      loop:true,
+      margin:20,
+      nav:true,
+      dots:true,
+      autoplay:true,
+      autoplayTimeout:4000,
+      autoplayHoverPause:true,
+      responsive:{
+        0:{ items:1 },
+        600:{ items:2 },
+        1000:{ items:4 }
+      }
+    });
+  });
+</script>
 {% endblock %}

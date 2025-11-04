@@ -17,11 +17,9 @@
 </head>
 
 <body>
+
 <!-- ============================
      NAVBAR PRINCIPAL
-============================ -->
-<!-- ============================
-     NAVBAR PRINCIPAL (Versión estable original)
 ============================ -->
 <nav class="navbar navbar-expand-lg bg-white sticky-top custom-navbar">
   <div class="container py-2">
@@ -88,25 +86,13 @@
   </div>
 </nav>
 
-
-<!-- ============================
-     CONTENIDO
-============================ -->
+<!-- CONTENIDO -->
 <main class="mt-3">
   {% block content %}{% endblock %}
 </main>
 
 {% include 'partials/footer.html' %}
 
-<!-- ============================
-     JS
-============================ -->
-<script src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{% static 'js/owl-carousel.js' %}"></script>
-<script src="{% static 'js/custom.js' %}"></script>
-
-<!-- ===== BUSCADOR AJAX ===== -->
 <script>
 function activarBuscador(inputId, resultsId) {
   const input = document.getElementById(inputId);
@@ -126,20 +112,21 @@ function activarBuscador(inputId, resultsId) {
       try {
         const res = await fetch(`{% url 'productos:buscar_ajax' %}?q=${encodeURIComponent(q)}`);
         const data = await res.json();
-        if (Array.isArray(data.results) && data.results.length > 0) {
+
+        if (data.results && data.results.length > 0) {
           results.innerHTML = data.results.map(p => `
             <a href="${p.url}" class="search-item">
               <img src="${p.imagen || '/static/images/no_image.png'}" alt="${p.nombre}">
               <div><strong>${p.nombre}</strong><span> Q${p.precio}</span></div>
             </a>
           `).join("");
-          results.style.display = "block";
         } else {
-          results.innerHTML = '<div class="no-results">Sin resultados</div>';
-          results.style.display = "block";
+          results.innerHTML = '<div class="no-results p-2 text-center text-muted">Sin resultados</div>';
         }
+
+        results.style.display = "block";
       } catch (error) {
-        console.error(error);
+        console.error("Error en búsqueda:", error);
       }
     }, 300);
   });
@@ -153,9 +140,14 @@ function activarBuscador(inputId, resultsId) {
 
 document.addEventListener("DOMContentLoaded", () => {
   activarBuscador("navbarSearch", "navbarSearchResults");
-  activarBuscador("mobileNavbarSearch", "mobileSearchResults");
 });
 </script>
 
+<script src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/owl-carousel.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+
+{% block extra_js %}{% endblock %}
 </body>
 </html>
