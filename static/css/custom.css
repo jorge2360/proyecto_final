@@ -1,14 +1,24 @@
 /* =======================================
-   NAVBAR LIMPIO Y RESPONSIVE
+   NAVBAR OFF THE RACK — VERSIÓN LIMPIA Y FUNCIONAL
 ======================================= */
 
 /* === CONTENEDOR GENERAL === */
 .custom-navbar {
   background: #fff;
   border-bottom: 1px solid #f3f3f3;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   font-weight: 500;
+  position: sticky;
+  top: 0;
   z-index: 1050;
+}
+
+/* === INTERIOR === */
+.custom-navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
 }
 
 /* === LOGO === */
@@ -22,20 +32,16 @@
   transform: scale(1.03);
 }
 
-/* === LINKS DEL MENÚ === */
-.navbar-nav .nav-link,
-.navbar-nav .nav-link:visited,
-.navbar-nav .nav-link:focus,
-.navbar-nav .nav-link:active {
-  color: #222 !important; /* negro fijo */
+/* === LINKS === */
+.navbar-nav .nav-link {
+  color: #222 !important;
   font-weight: 600;
   text-decoration: none;
-  transition: color 0.3s ease;
   padding: 0.5rem 1rem;
+  transition: color 0.3s ease;
 }
-
 .navbar-nav .nav-link:hover {
-  color: #198754 !important; /* verde elegante al pasar */
+  color: #198754 !important;
 }
 
 /* === DROPDOWN === */
@@ -53,15 +59,19 @@
   background-color: #f8f9fa;
   color: #198754;
 }
+@media (min-width: 992px) {
+  .dropdown:hover > .dropdown-menu {
+    display: block;
+  }
+}
 
 /* === BUSCADOR === */
 .search-form {
   position: relative;
   flex-grow: 1;
-  max-width: 350px;
+  max-width: 380px;
   margin: 0 25px;
 }
-
 .search-input {
   border-radius: 30px;
   padding: 6px 40px 6px 15px;
@@ -69,13 +79,11 @@
   width: 100%;
   transition: all 0.3s ease;
 }
-
 .search-input:focus {
   border-color: #198754;
   box-shadow: 0 0 0 0.2rem rgba(25,135,84,0.25);
   outline: none;
 }
-
 .search-icon {
   position: absolute;
   right: 15px;
@@ -83,9 +91,10 @@
   transform: translateY(-50%);
   color: #777;
   font-size: 1.1rem;
+  pointer-events: none;
 }
 
-/* === RESULTADOS BUSCADOR === */
+/* === RESULTADOS === */
 .search-results {
   position: absolute;
   top: 45px;
@@ -98,7 +107,6 @@
   display: none;
   z-index: 2000;
 }
-
 .search-item {
   display: flex;
   align-items: center;
@@ -120,14 +128,8 @@
   font-size: 0.85rem;
   color: #198754;
 }
-.no-results {
-  padding: 10px;
-  text-align: center;
-  color: #888;
-  font-size: 0.9rem;
-}
 
-/* === CARRITO === */
+/* === BOTÓN CARRITO === */
 .btn-outline-success {
   border-radius: 25px;
   font-weight: 500;
@@ -140,54 +142,50 @@
 }
 
 /* === ICONOS === */
-.bi-cart3, .bi-list, .bi-search {
+.bi-cart3,
+.bi-list {
   color: #444;
   transition: color 0.2s ease;
 }
-.bi-cart3:hover, .bi-list:hover, .bi-search:hover {
+.bi-cart3:hover,
+.bi-list:hover {
   color: #198754;
 }
 
-/* === PRODUCTOS - TARJETAS === */
-.product-card {
-  border: 1px solid #eee;
-  border-radius: 10px;
-  overflow: hidden;
-  background-color: #fff;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-}
-.product-card img {
-  height: 220px;
-  width: 100%;
-  object-fit: contain;
-  background: #f8f9fa;
-}
-.product-card h5 {
-  font-weight: 600;
-  margin: 0.5rem 0;
-}
-.badge-destacado {
-  background-color: #198754;
-  color: #fff;
-  font-size: 0.8rem;
-  border-radius: 8px;
-  padding: 0.3rem 0.6rem;
-}
+/* =======================================
+   RESPONSIVE
+======================================= */
 
-/* === RESPONSIVE === */
-@media (max-width: 992px) {
-  .search-form {
+/* Escritorio */
+@media (min-width: 992px) {
+  .navbar-toggler {
     display: none;
   }
-  .navbar-nav {
-    margin-top: 10px;
+  .navbar-collapse {
+    flex-grow: 0;
   }
-  .logo-img {
-    height: 48px;
+}
+
+/* Móvil */
+@media (max-width: 991.98px) {
+  .custom-navbar .container {
+    flex-wrap: wrap;
+  }
+  .navbar-brand {
+    order: 1;
+  }
+  .navbar-toggler {
+    order: 2;
+  }
+  .search-form {
+    order: 3;
+    width: 100%;
+    margin: 10px 0;
+  }
+  .navbar-collapse {
+    order: 4;
+    width: 100%;
+    margin-top: 8px;
   }
   .btn-outline-success {
     width: 100%;
@@ -195,181 +193,202 @@
   }
 }
 
-/* === CARRITO FLOTANTE (MÓVIL) === */
-@media (max-width: 768px) {
-  .floating-cart {
-    display: flex;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #198754;
-    color: #fff;
-    border-radius: 50%;
-    width: 55px;
-    height: 55px;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
-    z-index: 2000;
-  }
-}
 /* =======================================
-   CORRECCIÓN FINAL NAVBAR OFF THE RACK
+   ESPACIADOS Y SUPERPOSICIÓN
+======================================= */
+body {
+  padding-top: 0;
+}
+.main-banner {
+  margin-top: 0;
+}
+.container,
+.container-fluid,
+.section {
+  position: relative;
+  z-index: 1;
+}
+
+/* =======================================
+   OFF THE RACK — VERSIÓN FINAL ESTABLE
+   Banner + Categorías con overlay funcional
 ======================================= */
 
-/* ===== CONTENEDOR ===== */
-.custom-navbar {
-  background: #fff;
-  border-bottom: 2px solid #eaeaea; /* línea divisoria moderna */
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-  font-weight: 500;
-  z-index: 1050;
-}
-
-/* ===== LOGO ===== */
-.custom-navbar .logo-img {
-  height: 55px;
-  width: auto;
-  object-fit: contain;
-  transition: transform 0.2s ease;
-}
-.custom-navbar .logo-img:hover {
-  transform: scale(1.03);
-}
-
-/* ===== LINKS (EN NEGRO SIEMPRE) ===== */
-.custom-navbar .navbar-nav .nav-link,
-.custom-navbar .navbar-nav .nav-link:visited,
-.custom-navbar .navbar-nav .nav-link:focus,
-.custom-navbar .navbar-nav .nav-link:active {
-  color: #222 !important;
-  font-weight: 600;
-  text-decoration: none !important;
-  transition: color 0.3s ease;
-}
-
-.custom-navbar .navbar-nav .nav-link:hover {
-  color: #198754 !important;
-}
-
-/* ===== DROPDOWN ===== */
-.custom-navbar .dropdown-menu {
-  border-radius: 8px;
-  border: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-.custom-navbar .dropdown-item {
-  font-weight: 500;
-  color: #333;
-  padding: 0.6rem 1rem;
-}
-.custom-navbar .dropdown-item:hover {
-  background-color: #f8f9fa;
-  color: #198754;
-}
-
-/* ===== BUSCADOR ===== */
-.custom-navbar .search-form {
+/* ======= BANNER IZQUIERDO ======= */
+.main-banner .left-content {
   position: relative;
-  flex-grow: 1;
-  max-width: 350px;
-  margin: 0 25px;
+  overflow: hidden;
 }
-.custom-navbar .search-input {
-  border-radius: 30px;
-  padding: 6px 40px 6px 15px;
-  border: 1px solid #ccc;
+
+.main-banner .left-content .thumb {
+  position: relative;
+}
+
+.main-banner .left-content .thumb img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Texto centrado sin fondo blanco */
+.main-banner .left-content .inner-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  background: none !important;
+  z-index: 2;
+}
+
+.main-banner .left-content h4 {
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.main-banner .left-content span {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+}
+
+/* Botón del banner */
+.main-banner .left-content .main-border-button a {
+  display: inline-block;
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 8px 22px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  background: transparent;
   transition: all 0.3s ease;
 }
-.custom-navbar .search-input:focus {
-  border-color: #198754;
-  box-shadow: 0 0 0 0.2rem rgba(25,135,84,0.25);
-  outline: none;
-}
-.custom-navbar .search-icon {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #777;
-  font-size: 1.1rem;
-}
-
-/* ===== RESULTADOS BUSCADOR ===== */
-.custom-navbar .search-results {
-  position: absolute;
-  top: 45px;
-  left: 0;
-  width: 100%;
+.main-banner .left-content .main-border-button a:hover {
   background: #fff;
-  border: 1px solid #eee;
-  border-radius: 10px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-  display: none;
-  z-index: 2000;
-}
-.custom-navbar .search-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
-  text-decoration: none;
-  color: #333;
-}
-.custom-navbar .search-item:hover {
-  background: #f8f9fa;
-}
-.custom-navbar .search-item img {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  border-radius: 6px;
-}
-.custom-navbar .search-item span {
-  font-size: 0.85rem;
-  color: #198754;
+  color: #000;
 }
 
-/* ===== CARRITO ===== */
-.custom-navbar .btn-outline-success {
-  border-radius: 25px;
-  font-weight: 500;
-  padding: 5px 14px;
-  transition: all 0.2s ease;
+/* =======================================
+   EFECTO HOVER — CATEGORÍAS DERECHA
+   (Texto y botón aparecen solo al pasar el cursor)
+======================================= */
+
+.right-first-image {
+  position: relative;
+  overflow: hidden;
+  display: block;
 }
-.custom-navbar .btn-outline-success:hover {
-  background-color: #198754;
+
+.right-first-image .thumb {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.right-first-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+/* Efecto hover (zoom + leve oscurecimiento) */
+.right-first-image:hover img {
+  transform: scale(1.05);
+  filter: brightness(0.9);
+}
+
+/* Overlay oculto por defecto, sin ocupar espacio */
+.right-first-image .hover-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 25px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease, background 0.3s ease;
+  z-index: 2;
+}
+
+/* Al pasar el cursor, aparece el overlay encima */
+.right-first-image:hover .hover-content {
+  opacity: 1;
+  visibility: visible;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+/* Texto y botón dentro del hover */
+.right-first-image .hover-content h4 {
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
   color: #fff;
 }
 
-/* ===== ICONOS ===== */
-.custom-navbar .bi-cart3,
-.custom-navbar .bi-list,
-.custom-navbar .bi-search {
-  color: #444;
-  transition: color 0.2s ease;
-}
-.custom-navbar .bi-cart3:hover,
-.custom-navbar .bi-list:hover,
-.custom-navbar .bi-search:hover {
-  color: #198754;
+.right-first-image .hover-content p {
+  font-size: 0.95rem;
+  color: #f2f2f2;
+  margin-bottom: 15px;
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 992px) {
-  .custom-navbar .search-form {
-    display: none;
+.right-first-image .hover-content .main-border-button a {
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 8px 22px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+.right-first-image .hover-content .main-border-button a:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+/* Elimina textos duplicados */
+.right-first-image .inner-content {
+  display: none !important;
+}
+
+/* ======= UNIFORMIDAD DE ALTURA ======= */
+.right-content .row {
+  margin: 0;
+}
+.right-content .col-lg-6,
+.right-content .col-md-6,
+.right-content .col-sm-12 {
+  padding: 0;
+}
+
+/* Mantiene proporción pareja entre filas */
+.right-content .right-first-image {
+  height: 50%;
+  min-height: 280px;
+}
+@media (max-width: 991.98px) {
+  .right-content .right-first-image {
+    height: auto;
+    min-height: 240px;
   }
-  .custom-navbar .navbar-nav {
-    margin-top: 10px;
-  }
-  .custom-navbar .logo-img {
-    height: 48px;
-  }
-  .custom-navbar .btn-outline-success {
-    width: 100%;
-    justify-content: center;
-  }
+}
+
+/* ======= ESPACIADO GENERAL ======= */
+.section {
+  margin-top: 60px;
 }
